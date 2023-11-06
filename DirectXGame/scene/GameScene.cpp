@@ -18,14 +18,34 @@ void GameScene::Initialize() {
 	// ビューポートプロジェクションの初期化
 	viewProjection_.Initialize();
 
+	//// ワールドトランスフォームの初期化
+	//worldTransform_.Initialize();
+
 	// 自キャラの生成と初期化処理
 	player_ = std::make_unique<Player>();
 	player_->Initialize(modelPlayer_.get());
+
+	//追従カメラの生成と初期化処理
+	followCamera_ = std::make_unique<FollowCamera>();
+	followCamera_->Initialize();
+	// 自キャラのワールドトランスフォームを追従カメラのセット
+	followCamera_->SetTarget(&player_->GetWorldTransform());
 }
 
 void GameScene::Update() {
 	// 自キャラの更新
 	player_->Update();
+
+	// 追従カメラの更新
+	followCamera_->Update();
+
+	// ビュープロジェクションの反映
+	viewProjection_.matView = followCamera_->GetViewProjection().matView;
+	viewProjection_.matProjection = followCamera_->GetViewProjection().matProjection;
+
+	// ビュープロジェクション行列の転送
+	viewProjection_.TransferMatrix();
+
 }
 
 void GameScene::Draw() {

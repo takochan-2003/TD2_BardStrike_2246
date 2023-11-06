@@ -24,9 +24,20 @@ public:
 	/// </summary>
 	void Draw(const ViewProjection& viewProjection);
 
+	/// <summary>
+	///  ワールド座標を取得
+	/// </summary>
+	/// <returns></returns>
+	Vector3 GetWorldPosition();
+	const WorldTransform& GetWorldTransform();
+
+
+	void SetViewProjection(const ViewProjection* viewProjection) {
+		viewProjection_ = viewProjection;
+	}
+
 	private:
 	Input* input_ = nullptr;
-
 	// ワールド変換データ
 	WorldTransform worldTransform_;
 	// モデル

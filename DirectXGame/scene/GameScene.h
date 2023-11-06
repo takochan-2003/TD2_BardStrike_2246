@@ -9,6 +9,7 @@
 #include "WorldTransform.h"
 
 #include "Player.h"
+#include "FollowCamera.h"
 
 #include <memory>
 
@@ -56,6 +57,9 @@ private: // メンバ変数
 
 	// 自キャラ
 	std::unique_ptr<Player> player_;
+
+	//追従カメラ
+	std::unique_ptr<FollowCamera> followCamera_;
 
 	/// <summary>
 	/// ゲームシーン用
