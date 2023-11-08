@@ -61,6 +61,9 @@ private: // メンバ変数
 	//追従カメラ
 	std::unique_ptr<FollowCamera> followCamera_;
 
+	// テクスチャハンドル
+	uint32_t textureHandle_ = 0u;
+
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>

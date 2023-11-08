@@ -114,6 +114,7 @@
     <ClCompile Include="MT.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
+    <ClCompile Include="WorlsTransformEx.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2d\ImGuiManager.h" />
