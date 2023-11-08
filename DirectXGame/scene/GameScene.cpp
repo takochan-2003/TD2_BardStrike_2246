@@ -13,7 +13,7 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 
 	// 3Dモデルの生成
-	//modelPlayer_.reset(Model::CreateFromOBJ("player", true));
+	modelPlayer_.reset(Model::CreateFromOBJ("cube", true));
 
 	// ビューポートプロジェクションの初期化
 	viewProjection_.Initialize();
