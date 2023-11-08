@@ -7,6 +7,7 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
+#include <cassert>
 
 class Player {
 public: // メンバ関数
@@ -15,15 +16,12 @@ public: // メンバ関数
 	/// </summary>
 	//Player();
 
-	/// <summary>
-	/// デストラクタ
-	/// </summary>
-	//~Player();
+public:
 
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize();
+	void Initialize(Model* model);
 
 	/// <summary>
 	/// 毎フレーム処理
@@ -33,14 +31,29 @@ public: // メンバ関数
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
-
-private: // メンバ変数
-	DirectXCommon* dxCommon_ = nullptr;
-	Input* input_ = nullptr;
-	Audio* audio_ = nullptr;
+	void Draw(const ViewProjection& viewProjection);
 
 	/// <summary>
-	/// ゲームシーン用
+	///  ワールド座標を取得
 	/// </summary>
-	};
+	/// <returns></returns>
+	Vector3 GetWorldPosition();
+	const WorldTransform& GetWorldTransform();
+
+
+	void SetViewProjection(const ViewProjection* viewProjection) {
+		viewProjection_ = viewProjection;
+	}
+
+	private:
+	Input* input_ = nullptr;
+	// ワールド変換データ
+	WorldTransform worldTransform_;
+	// モデル
+	Model* model_ = nullptr;
+
+	// カメラのビュープロジェクション
+	const ViewProjection* viewProjection_ = nullptr;
+
+
+};
