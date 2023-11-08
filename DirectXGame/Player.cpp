@@ -31,7 +31,7 @@ void Player::Update() {
 
 		// 移動量に速さを反映
 		move = Multiply(speed, Normalize(move));
-
+		
 		// 移動量に速さを反映(θ度の移動ベクトル)
 		rotation = MakeRotateYmatrix(viewProjection_->rotation_.y);
 
