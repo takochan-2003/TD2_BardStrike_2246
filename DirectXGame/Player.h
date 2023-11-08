@@ -7,7 +7,7 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-#include <cassert>
+#include "MT.h"
 
 class Player {
 public: // メンバ関数
@@ -17,43 +17,37 @@ public: // メンバ関数
 	//Player();
 
 public:
+	void Initialize(Model* model, uint32_t textureHndle);
 
-	/// <summary>
-	/// 初期化
-	/// </summary>
-	void Initialize(Model* model);
-
-	/// <summary>
-	/// 毎フレーム処理
-	/// </summary>
 	void Update();
 
-	/// <summary>
-	/// 描画
-	/// </summary>
-	void Draw(const ViewProjection& viewProjection);
-
-	/// <summary>
-	///  ワールド座標を取得
-	/// </summary>
-	/// <returns></returns>
-	Vector3 GetWorldPosition();
-	const WorldTransform& GetWorldTransform();
-
+	void Draw(ViewProjection& viewProjection);
 
 	void SetViewProjection(const ViewProjection* viewProjection) {
 		viewProjection_ = viewProjection;
 	}
 
-	private:
-	Input* input_ = nullptr;
+	// 移動処理
+	void KeyMove();
+	void JoyMove();
+
+	// ワールドトランスフォーム取得
+	const WorldTransform& GetWorldTransform();
+
+	// ワールド座標を取得
+	Vector3 GetWorldPosition();
+
+private:
+	// カメラのビュープロジェクション
+	const ViewProjection* viewProjection_ = nullptr;
+
 	// ワールド変換データ
 	WorldTransform worldTransform_;
 	// モデル
 	Model* model_ = nullptr;
+	// テクスチャハンドル
+	uint32_t textureHandle_ = 0u;
 
-	// カメラのビュープロジェクション
-	const ViewProjection* viewProjection_ = nullptr;
-
-
+	// キーボード入力
+	Input* input_ = nullptr;
 };

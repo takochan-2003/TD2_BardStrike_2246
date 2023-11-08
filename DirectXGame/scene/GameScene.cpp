@@ -23,7 +23,7 @@ void GameScene::Initialize() {
 
 	// 自キャラの生成と初期化処理
 	player_ = std::make_unique<Player>();
-	player_->Initialize(modelPlayer_.get());
+	player_->Initialize(modelPlayer_.get(), textureHandle_);
 
 	//スカイドームの生成と初期化処理
 	skydome_ = new Skydome();
@@ -35,11 +35,13 @@ void GameScene::Initialize() {
 	followCamera_->Initialize();
 	// 自キャラのワールドトランスフォームを追従カメラのセット
 	followCamera_->SetTarget(&player_->GetWorldTransform());
+
+	// 自キャラに追従カメラをアドレス渡し
+	player_->SetViewProjection(&followCamera_->GetViewProjection());
+
 }
 
 void GameScene::Update() {
-	// 自キャラの更新
-	player_->Update();
 
 	// 追従カメラの更新
 	followCamera_->Update();
@@ -47,6 +49,9 @@ void GameScene::Update() {
 	// ビュープロジェクションの反映
 	viewProjection_.matView = followCamera_->GetViewProjection().matView;
 	viewProjection_.matProjection = followCamera_->GetViewProjection().matProjection;
+
+		// 自キャラの更新
+	player_->Update();
 
 	// ビュープロジェクション行列の転送
 	viewProjection_.TransferMatrix();

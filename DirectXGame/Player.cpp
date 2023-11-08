@@ -1,69 +1,105 @@
 ﻿#include "Player.h"
-#include "MT.h"
+#include <cassert>
 
-void Player::Initialize(Model* model) {
+void Player::Initialize(Model* model, uint32_t textureHndle) {
+	// NULLポインタチェック
 	assert(model);
-	input_ = Input::GetInstance();
-
-	// 引数として受け取ったデータをメンバ変数に記録する
+	// 引数からデータを受け取る
 	model_ = model;
+
+	textureHandle_ = textureHndle;
+
 	// ワールド変換の初期化
 	worldTransform_.Initialize();
+	// ビュープロジェクションの初期化
+
+	worldTransform_.scale_ = {1.0f, 1.0f, 1.0f};
+	worldTransform_.rotation_ = {0.0f, 0.0f, 0.0f};
+	worldTransform_.translation_ = {0.0f, 0.0f, 0.0f};
+
+	// シングルトンインスタンスを取得する
+	input_ = Input::GetInstance();
+}
+void Player::Update() {
+
+	// 移動処理
+	// KeyMove();
+	JoyMove();
+}
+void Player::Draw(ViewProjection& viewProjection) {
+	model_->Draw(worldTransform_, viewProjection, textureHandle_);
 }
 
-void Player::Update() { 
+void Player::KeyMove() {
+	// キャラクターの移動ベクトル
+	Vector3 move = {0, 0, 0};
+	// キャラクターの移動速度
+	const float kCharacterSpeed = 0.2f;
+	// 押した方向で移動ベクトルを変更(左右)
+	if (input_->PushKey(DIK_A)) {
+		move.x -= kCharacterSpeed;
+	} else if (input_->PushKey(DIK_D)) {
+		move.x += kCharacterSpeed;
+	}
+	// 押した方向で移動ベクトルを変更
+	if (input_->PushKey(DIK_W)) {
+		move.y += kCharacterSpeed;
+	} else if (input_->PushKey(DIK_S)) {
+		move.y -= kCharacterSpeed;
+	}
+
+	// 座標移動(ベクトルの加算)
+	worldTransform_.translation_ = Add(worldTransform_.translation_, move);
+}
+
+void Player::JoyMove() {
 	// ゲームパッドの状態を得る変数
 	XINPUT_STATE joyState;
-
-	// ゲームパッド状態取得、ゲームパッドが有効の場合if文が通る
+	// Vector3 move = {0, 0, 0};
+	//  ゲームパッド状態取得変数
 	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
-
-		// 速さ
-		const float speed = 0.3f;
-		Matrix4x4 rotation;
-		
-		// 移動量
+		// 移動速度
+		const float kCharacterSpeed = 0.5f;
 		Vector3 move = {
-		    (float)joyState.Gamepad.sThumbLX / SHRT_MAX * speed, // Lスティックの横成分
+		    (float)joyState.Gamepad.sThumbLX / SHRT_MAX * kCharacterSpeed,
 		    0.0f,
-		    (float)joyState.Gamepad.sThumbLY / SHRT_MAX * speed, // Lスティックの縦成分
+		    (float)joyState.Gamepad.sThumbLY / SHRT_MAX * kCharacterSpeed,
 		};
 
+		// カメラの角度から回転行列を計算する
+		Matrix4x4 rotateXMatrix = MakeRotateXmatrix(viewProjection_->rotation_.x);
+		Matrix4x4 rotateYMatrix = MakeRotateYmatrix(viewProjection_->rotation_.y);
+		Matrix4x4 rotateZMatrix = MakeRotateZmatrix(viewProjection_->rotation_.z);
+		Matrix4x4 rotateXYZMatrix = Multiply(rotateXMatrix, Multiply(rotateYMatrix, rotateZMatrix));
+
 		// 移動量に速さを反映
-		move = Multiply(speed, Normalize(move));
-		
-		// 移動量に速さを反映(θ度の移動ベクトル)
-		rotation = MakeRotateYmatrix(viewProjection_->rotation_.y);
+		move = Multiply(kCharacterSpeed,Normalize(move));
 
-		move = Transform(move, rotation);
+		move = TransformNormal(move, rotateXYZMatrix);
 
-		if (move.y != 0) {
-			worldTransform_.rotation_.y = std::atan2(move.z, move.x);
+		if (move.z != 0 || move.y != 0) {
+			worldTransform_.rotation_.y = std::atan2(move.x, move.z);
 		}
 
-		// 移動
 		worldTransform_.translation_ = Add(worldTransform_.translation_, move);
 	}
+
+	// move.x += (float)joyState.Gamepad.sThumbLX / SHRT_MAX * kCharacterSpeed;
+	// move.z += (float)joyState.Gamepad.sThumbLY / SHRT_MAX * kCharacterSpeed;
+	//// 座標移動(ベクトルの加算)
+	// worldTransform_.translation_ = Add(worldTransform_.translation_, move);
+	// 行列を更新
+	worldTransform_.UpdateMatrix();
 }
 
-void Player::Draw(const ViewProjection& viewProjection) {
-	// 3Dモデルを描画
-	model_->Draw(worldTransform_, viewProjection);
-}
+const WorldTransform& Player::GetWorldTransform() { return worldTransform_; }
 
 Vector3 Player::GetWorldPosition() {
-	// ワールド座標を入れる変数
 	Vector3 worldPos;
 
-	// ワールド行列の平行移動成分を取得(ワールド座標)
 	worldPos.x = worldTransform_.matWorld_.m[3][0];
 	worldPos.y = worldTransform_.matWorld_.m[3][1];
 	worldPos.z = worldTransform_.matWorld_.m[3][2];
 
 	return worldPos;
-}
-
-const WorldTransform& Player::GetWorldTransform() {
-	// TODO: return ステートメントをここに挿入します
-	return worldTransform_;
 }
