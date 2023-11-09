@@ -12,8 +12,6 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 
-	// 3Dモデルの生成
-	modelPlayer_.reset(Model::CreateFromOBJ("cube", true));
 
 	// ビューポートプロジェクションの初期化
 	viewProjection_.Initialize();
@@ -21,8 +19,11 @@ void GameScene::Initialize() {
 	//// ワールドトランスフォームの初期化
 	//worldTransform_.Initialize();
 
+	
 	// 自キャラの生成と初期化処理
 	player_ = std::make_unique<Player>();
+	// 3Dモデルの生成
+	modelPlayer_.reset(Model::CreateFromOBJ("Player", true));
 	player_->Initialize(modelPlayer_.get());
 
 	//スカイドームの生成と初期化処理

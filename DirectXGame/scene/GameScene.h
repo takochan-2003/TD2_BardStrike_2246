@@ -48,10 +48,16 @@ private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
+
+		// テクスチャハンドル
+	uint32_t textureHandle_ = 0u;
 	
 	//スカイドームの3Dモデル
 	Skydome* skydome_ = nullptr;
 	Model* skydomeModel_ = nullptr;
+
+	// 3Dモデル
+	std::unique_ptr<Model> model_;
 
 	// 自キャラの3Dモデル
 	std::unique_ptr<Model> modelPlayer_;
