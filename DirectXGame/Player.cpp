@@ -50,6 +50,44 @@ void Player::KeyMove() {
 	worldTransform_.translation_ = Add(worldTransform_.translation_, move);
 }
 
+void Player::RailMove() {
+	// ゲームパッドの状態を得る変数
+	XINPUT_STATE joyState;
+	// Vector3 move = {0, 0, 0};
+	//  ゲームパッド状態取得変数
+	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
+		// 移動速度
+		const float kCharacterSpeed = 0.5f;
+		Vector3 move = {
+		    (float)joyState.Gamepad.sThumbLX / SHRT_MAX * kCharacterSpeed,
+		    0.0f,
+		    (float)joyState.Gamepad.sThumbLY / SHRT_MAX * kCharacterSpeed,
+		};
+
+		// カメラの角度から回転行列を計算する
+		Matrix4x4 rotateXMatrix = MakeRotateXmatrix(viewProjection_->rotation_.x);
+		Matrix4x4 rotateYMatrix = MakeRotateYmatrix(viewProjection_->rotation_.y);
+		Matrix4x4 rotateZMatrix = MakeRotateZmatrix(viewProjection_->rotation_.z);
+		Matrix4x4 rotateXYZMatrix = Multiply(rotateXMatrix, Multiply(rotateYMatrix, rotateZMatrix));
+
+		// 移動量に速さを反映
+		move = Multiply(kCharacterSpeed, Normalize(move));
+
+		move = TransformNormal(move, rotateXYZMatrix);
+
+		if (move.z != 0 || move.y != 0) {
+			worldTransform_.rotation_.y = std::atan2(move.x, move.z);
+		}
+
+
+		// 移動
+		worldTransform_.translation_ = Add(worldTransform_.translation_, move);
+	}
+
+
+	worldTransform_.UpdateMatrix();
+}
+
 void Player::JoyMove() {
 	// ゲームパッドの状態を得る変数
 	XINPUT_STATE joyState;
@@ -78,8 +116,6 @@ void Player::JoyMove() {
 		if (move.z != 0 || move.y != 0) {
 			worldTransform_.rotation_.y = std::atan2(move.x, move.z);
 		}
-
-		//worldTransform_.rotation_ = Add(worldTransform_.rotation_, move);
 
 		//移動
 		worldTransform_.translation_ = Add(worldTransform_.translation_, move);

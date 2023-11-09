@@ -31,6 +31,8 @@ public:
 	void KeyMove();
 	void JoyMove();
 
+	void RailMove();
+
 	// ワールドトランスフォーム取得
 	const WorldTransform& GetWorldTransform();
 
