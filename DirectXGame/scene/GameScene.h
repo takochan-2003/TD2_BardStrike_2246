@@ -9,6 +9,7 @@
 #include "WorldTransform.h"
 #include "Skydome.h"
 #include "Player.h"
+#include "RailCamera.h"
 
 #include <memory>
 
@@ -46,20 +47,25 @@ public: // メンバ関数
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
-	Audio* audio_ = nullptr;
-	
-	//スカイドームの3Dモデル
-	Skydome* skydome_ = nullptr;
-	Model* skydomeModel_ = nullptr;
+	Audio* audio_ = nullptr;	
 
 	// 自キャラの3Dモデル
 	std::unique_ptr<Model> modelPlayer_;
 
+	//スカイドームの3Dモデル
+	std::unique_ptr<Model> modelSkydome_;
+
 	// ビュープロダクション
 	ViewProjection viewProjection_;
 
+	//スカイドーム
+	std::unique_ptr<Skydome> skydome_;
+
 	// 自キャラ
 	std::unique_ptr<Player> player_;
+
+	//レイルカメラ
+	std::unique_ptr<RailCamera> railCamera_;
 
 	/// <summary>
 	/// ゲームシーン用

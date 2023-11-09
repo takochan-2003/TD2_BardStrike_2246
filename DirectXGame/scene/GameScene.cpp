@@ -12,35 +12,47 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 
-	// 3Dモデルの生成
+	// 自機の3Dモデル生成
 	modelPlayer_.reset(Model::CreateFromOBJ("cube", true));
+	modelSkydome_.reset(Model::CreateFromOBJ("skydome", true));
 
 	// ビューポートプロジェクションの初期化
 	viewProjection_.Initialize();
 
 	//// ワールドトランスフォームの初期化
-	//worldTransform_.Initialize();
+	// worldTransform_.Initialize();
+
+	Vector3 playerPosition(0, 0, 0.2f);
 
 	// 自キャラの生成と初期化処理
 	player_ = std::make_unique<Player>();
-	player_->Initialize(modelPlayer_.get());
+	player_->Initialize(modelPlayer_.get(), playerPosition);
 
-	//スカイドームの生成と初期化処理
-	skydome_ = new Skydome();
-	skydomeModel_ = Model::CreateFromOBJ("skydome", true);
-	skydome_->Initialize(skydomeModel_);
+	// スカイドームの生成と初期化処理
+	skydome_ = std::make_unique<Skydome>();
+	skydome_->Initialize(modelSkydome_.get());
 
+	// レイルカメラの生成と初期化処理
+	railCamera_ = std::make_unique<RailCamera>();
+	railCamera_->Initialize({0, 0, 0.0f}, {0, 0, 0});
 
+	// 自キャラとレールカメラの親子関係を結ぶ
+	player_->SetParent(&railCamera_->GetWorldTransform());
 }
 
 void GameScene::Update() {
 
-		// 自キャラの更新
+	// 自キャラの更新
 	player_->Update();
+
+	// レイルカメラの更新
+	railCamera_->Update();
+
+	viewProjection_.matView = railCamera_->GetViewProjection().matView;
+	viewProjection_.matProjection = railCamera_->GetViewProjection().matProjection;
 
 	// ビュープロジェクション行列の転送
 	viewProjection_.TransferMatrix();
-
 }
 
 void GameScene::Draw() {
@@ -72,7 +84,7 @@ void GameScene::Draw() {
 
 	// プレイヤーの描画
 	player_->Draw(viewProjection_);
-	skydome_->Draw(viewProjection_);
+	// skydome_->Draw(viewProjection_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

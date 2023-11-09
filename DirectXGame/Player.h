@@ -17,7 +17,7 @@ public: // メンバ関数
 	//Player();
 
 public:
-	void Initialize(Model* model);
+	void Initialize(Model* model,Vector3 position);
 
 	void Update();
 
@@ -27,15 +27,17 @@ public:
 		viewProjection_ = viewProjection;
 	}
 
-	// 移動処理
-	void KeyMove();
-	void JoyMove();
-
 	// ワールドトランスフォーム取得
 	const WorldTransform& GetWorldTransform();
 
 	// ワールド座標を取得
 	Vector3 GetWorldPosition();
+
+	/// <summary>
+	/// 親となるワールドトランスフォームをセット
+	/// </summary>
+	/// <param name="parent"></param>
+	void SetParent(const WorldTransform* parent);
 
 private:
 	// カメラのビュープロジェクション
