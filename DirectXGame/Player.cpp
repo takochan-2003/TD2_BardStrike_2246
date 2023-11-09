@@ -1,13 +1,11 @@
 ﻿#include "Player.h"
 #include <cassert>
 
-void Player::Initialize(Model* model, uint32_t textureHndle) {
+void Player::Initialize(Model* model) {
 	// NULLポインタチェック
 	assert(model);
 	// 引数からデータを受け取る
 	model_ = model;
-
-	textureHandle_ = textureHndle;
 
 	// ワールド変換の初期化
 	worldTransform_.Initialize();

@@ -17,7 +17,7 @@ public: // メンバ関数
 	//Player();
 
 public:
-	void Initialize(Model* model, uint32_t textureHndle);
+	void Initialize(Model* model);
 
 	void Update();
 
