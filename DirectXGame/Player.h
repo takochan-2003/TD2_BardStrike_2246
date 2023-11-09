@@ -1,14 +1,23 @@
 ﻿#pragma once
 
+#include "Audio.h"
+#include "DirectXCommon.h"
 #include "Input.h"
 #include "Model.h"
+#include "Sprite.h"
+#include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "MT.h"
 
 class Player {
+public: // メンバ関数
+	/// <summary>
+	/// コンストクラタ
+	/// </summary>
+	//Player();
 
 public:
-	void Initialize(Model* model, uint32_t textureHndle);
+	void Initialize(Model* model);
 
 	void Update();
 

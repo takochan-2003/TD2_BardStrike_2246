@@ -25,6 +25,11 @@ void GameScene::Initialize() {
 	player_ = std::make_unique<Player>();
 	player_->Initialize(modelPlayer_.get(), textureHandle_);
 
+	//スカイドームの生成と初期化処理
+	skydome_ = new Skydome();
+	skydomeModel_ = Model::CreateFromOBJ("skydome", true);
+	skydome_->Initialize(skydomeModel_);
+
 	//追従カメラの生成と初期化処理
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Initialize();
@@ -82,6 +87,7 @@ void GameScene::Draw() {
 
 	// プレイヤーの描画
 	player_->Draw(viewProjection_);
+	skydome_->Draw(viewProjection_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
