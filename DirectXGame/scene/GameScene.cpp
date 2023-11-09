@@ -30,25 +30,10 @@ void GameScene::Initialize() {
 	skydomeModel_ = Model::CreateFromOBJ("skydome", true);
 	skydome_->Initialize(skydomeModel_);
 
-	//追従カメラの生成と初期化処理
-	followCamera_ = std::make_unique<FollowCamera>();
-	followCamera_->Initialize();
-	// 自キャラのワールドトランスフォームを追従カメラのセット
-	followCamera_->SetTarget(&player_->GetWorldTransform());
-
-	// 自キャラに追従カメラをアドレス渡し
-	player_->SetViewProjection(&followCamera_->GetViewProjection());
 
 }
 
 void GameScene::Update() {
-
-	// 追従カメラの更新
-	followCamera_->Update();
-
-	// ビュープロジェクションの反映
-	viewProjection_.matView = followCamera_->GetViewProjection().matView;
-	viewProjection_.matProjection = followCamera_->GetViewProjection().matProjection;
 
 		// 自キャラの更新
 	player_->Update();
