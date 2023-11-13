@@ -7,7 +7,7 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-
+#include "Skydome.h"
 #include "Player.h"
 #include "FollowCamera.h"
 
@@ -65,6 +65,10 @@ private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
+	
+	//スカイドームの3Dモデル
+	Skydome* skydome_ = nullptr;
+	Model* skydomeModel_ = nullptr;
 
 	// 自キャラの3Dモデル
 	std::unique_ptr<Model> modelPlayer_;
