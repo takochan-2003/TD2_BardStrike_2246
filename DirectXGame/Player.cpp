@@ -9,6 +9,7 @@ void Player::Initialize(Model* model) {
 	model_ = model;
 	// ワールド変換の初期化
 	worldTransform_.Initialize();
+
 }
 
 void Player::Update() { 

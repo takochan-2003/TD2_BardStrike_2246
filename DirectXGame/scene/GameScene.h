@@ -12,6 +12,7 @@
 #include "FollowCamera.h"
 
 #include <memory>
+#include <sstream>
 
 /// <summary>
 /// ゲームシーン
@@ -44,6 +45,22 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	/// <summary>
+	/// ポイントアイテム発生データを読み込み
+	/// </summary>
+	void LoadPointPopData();
+
+	/// <summary>
+	/// ポイントアイテム発生コマンドの更新
+	/// </summary>
+	void UpdataPointPopCommands();
+
+	/// <summary>
+	/// ポイントアイテムの生成
+	/// </summary>
+	/// <param name="position"></param>
+	void PointGenerate(Vector3 position);
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -60,6 +77,12 @@ private: // メンバ変数
 
 	//追従カメラ
 	std::unique_ptr<FollowCamera> followCamera_;
+
+	//ポイントアイテム
+	//std::unique_ptr<>
+
+	//　ポイントアイテム発生コマンド
+	std::stringstream pointPopCommnds;
 
 	/// <summary>
 	/// ゲームシーン用

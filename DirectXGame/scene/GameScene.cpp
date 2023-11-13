@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "TextureManager.h"
 #include <cassert>
+#include <fstream>
 
 GameScene::GameScene() {}
 
@@ -12,20 +13,21 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 
-	// 3Dモデルの生成
-	//modelPlayer_.reset(Model::CreateFromOBJ("player", true));
+	// 自機の3Dモデルの生成
+	modelPlayer_.reset(Model::CreateFromOBJ("cube", true));
 
 	// ビューポートプロジェクションの初期化
 	viewProjection_.Initialize();
 
 	//// ワールドトランスフォームの初期化
-	//worldTransform_.Initialize();
+	// worldTransform_.Initialize();
 
 	// 自キャラの生成と初期化処理
 	player_ = std::make_unique<Player>();
 	player_->Initialize(modelPlayer_.get());
+	player_->SetViewProjection(&followCamera_->GetViewProjection());
 
-	//追従カメラの生成と初期化処理
+	// 追従カメラの生成と初期化処理
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Initialize();
 	// 自キャラのワールドトランスフォームを追従カメラのセット
@@ -45,7 +47,6 @@ void GameScene::Update() {
 
 	// ビュープロジェクション行列の転送
 	viewProjection_.TransferMatrix();
-
 }
 
 void GameScene::Draw() {
@@ -94,4 +95,62 @@ void GameScene::Draw() {
 	Sprite::PostDraw();
 
 #pragma endregion
+}
+
+void GameScene::LoadPointPopData() {
+	std::ifstream file;
+	file.open("");
+	assert(file.is_open());
+
+	// ファイルの内容を文字列ストリームにコピー
+	pointPopCommnds << file.rdbuf();
+
+	// ファイルを閉じる
+	file.close();
+}
+
+void GameScene::UpdataPointPopCommands() {
+
+	// 1行分の文字列を入れる変数
+	std::string line;
+
+	// コマンド実行ループ
+	while (getline(pointPopCommnds, line)) {
+		std::istringstream line_stream(line);
+
+		std::string word;
+		// 　,区切りで行の先頭文字列を所得
+
+		getline(line_stream, word, ',');
+
+		// "//"から始まる行はコメント
+		if (word.find("//") == 0) {
+			// コメント行を飛ばす
+			continue;
+		}
+
+		// POPコマンド
+		if (word.find("POP") == 0) {
+			// x座標
+			getline(line_stream, word, ',');
+			float x = (float)std::atof(word.c_str());
+
+			// y座標
+			getline(line_stream, word, ',');
+			float y = (float)std::atof(word.c_str());
+
+			// z座標
+			getline(line_stream, word, ',');
+			float z = (float)std::atof(word.c_str());
+
+			PointGenerate({x, y, z});
+
+		}
+	}
+}
+
+void GameScene::PointGenerate(Vector3 position) {
+
+
+
 }
