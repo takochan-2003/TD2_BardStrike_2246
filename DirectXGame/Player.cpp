@@ -18,12 +18,14 @@ void Player::Initialize(Model* model) {
 	// シングルトンインスタンスを取得する
 	input_ = Input::GetInstance();
 }
+
 void Player::Update() {
 
 	// 移動処理
 	// KeyMove();
 	JoyMove();
 }
+
 void Player::Draw(ViewProjection& viewProjection) {
 	model_->Draw(worldTransform_, viewProjection);
 }
@@ -129,7 +131,8 @@ void Player::JoyMove() {
 	worldTransform_.UpdateMatrix();
 }
 
-const WorldTransform& Player::GetWorldTransform() { return worldTransform_; }
+//親子関係を結ぶ
+void Player::SetParent(const WorldTransform* parent) { worldTransform_.parent_ = parent; }
 
 Vector3 Player::GetWorldPosition() {
 	Vector3 worldPos;

@@ -38,7 +38,7 @@ void GameScene::Initialize() {
 	followCamera_->SetTarget(&player_->GetWorldTransform());
 
 	// 自キャラに追従カメラをアドレス渡し
-	player_->SetViewProjection(&followCamera_->GetViewProjection());
+	player_->SetViewProjection(followCamera_->GetViewProjection());
 
 }
 

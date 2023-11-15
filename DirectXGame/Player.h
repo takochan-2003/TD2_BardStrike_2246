@@ -23,9 +23,11 @@ public:
 
 	void Draw(ViewProjection& viewProjection);
 
-	void SetViewProjection(const ViewProjection* viewProjection) {
-		viewProjection_ = viewProjection;
-	}
+	//カメラの向きをセット
+	void SetParent(const WorldTransform* parent);
+
+	void SetViewProjection(const Vector3 parent) { worldTransform_.rotation_; }
+
 
 	// 移動処理
 	void KeyMove();
