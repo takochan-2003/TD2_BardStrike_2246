@@ -23,7 +23,7 @@ void Player::Update() {
 	// 移動処理
 	JoyMove();
 
-	worldTransform_.translation_.z += 1;
+	//worldTransform_.translation_.z += 1;
 
 	//worldTransform_.translation_.z += 0.01f;
 
