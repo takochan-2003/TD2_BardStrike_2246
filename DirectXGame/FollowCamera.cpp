@@ -21,8 +21,7 @@ void FollowCamera::Update() { // ゲームパッドの状態を得る変数
 
 		viewProjection_.rotation_.y += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * rotation;
 
-		viewProjection_.rotation_.x += (float)joyState.Gamepad.sThumbRY / SHRT_MAX * rotation;
-
+		viewProjection_.rotation_.x -= (float)joyState.Gamepad.sThumbRY / SHRT_MAX * rotation;
 
 	}
 

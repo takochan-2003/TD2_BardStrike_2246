@@ -28,7 +28,6 @@ public:
 	}
 
 	// 移動処理
-	void KeyMove();
 	void JoyMove();
 
 	// ワールドトランスフォーム取得

@@ -21,33 +21,15 @@ void Player::Initialize(Model* model) {
 void Player::Update() {
 
 	// 移動処理
-	// KeyMove();
 	JoyMove();
+
+	worldTransform_.translation_.z += 1;
+
+	//worldTransform_.translation_.z += 0.01f;
+
 }
 void Player::Draw(ViewProjection& viewProjection) {
 	model_->Draw(worldTransform_, viewProjection, textureHandle_);
-}
-
-void Player::KeyMove() {
-	// キャラクターの移動ベクトル
-	Vector3 move = {0, 0, 0};
-	// キャラクターの移動速度
-	const float kCharacterSpeed = 0.2f;
-	// 押した方向で移動ベクトルを変更(左右)
-	if (input_->PushKey(DIK_A)) {
-		move.x -= kCharacterSpeed;
-	} else if (input_->PushKey(DIK_D)) {
-		move.x += kCharacterSpeed;
-	}
-	// 押した方向で移動ベクトルを変更
-	if (input_->PushKey(DIK_W)) {
-		move.y += kCharacterSpeed;
-	} else if (input_->PushKey(DIK_S)) {
-		move.y -= kCharacterSpeed;
-	}
-
-	// 座標移動(ベクトルの加算)
-	worldTransform_.translation_ = Add(worldTransform_.translation_, move);
 }
 
 void Player::JoyMove() {
@@ -82,10 +64,6 @@ void Player::JoyMove() {
 		worldTransform_.translation_ = Add(worldTransform_.translation_, move);
 	}
 
-	// move.x += (float)joyState.Gamepad.sThumbLX / SHRT_MAX * kCharacterSpeed;
-	// move.z += (float)joyState.Gamepad.sThumbLY / SHRT_MAX * kCharacterSpeed;
-	//// 座標移動(ベクトルの加算)
-	// worldTransform_.translation_ = Add(worldTransform_.translation_, move);
 	// 行列を更新
 	worldTransform_.UpdateMatrix();
 }
