@@ -96,6 +96,7 @@ void Player::JoyMove() {
 	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
 		// 移動速度
 		const float kCharacterSpeed = 0.5f;
+		//↓変更点
 		Vector3 move = {
 		    (float)joyState.Gamepad.sThumbLX / SHRT_MAX * kCharacterSpeed,
 		    0.0f,
@@ -121,10 +122,6 @@ void Player::JoyMove() {
 		worldTransform_.translation_ = Add(worldTransform_.translation_, move);
 	}
 
-	// move.x += (float)joyState.Gamepad.sThumbLX / SHRT_MAX * kCharacterSpeed;
-	// move.z += (float)joyState.Gamepad.sThumbLY / SHRT_MAX * kCharacterSpeed;
-	//// 座標移動(ベクトルの加算)
-	// worldTransform_.translation_ = Add(worldTransform_.translation_, move);
 	// 行列を更新
 	worldTransform_.UpdateMatrix();
 }
