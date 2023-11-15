@@ -17,7 +17,7 @@ public:
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	void Draw(ViewProjection& viewProjection);
 
 private:
 
