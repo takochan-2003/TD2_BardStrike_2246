@@ -1,10 +1,6 @@
 ﻿#include "Item.h"
 
-void Item::Initialize() {
-
-
-
-}
+void Item::Initialize() {}
 
 void Item::Update() {}
 

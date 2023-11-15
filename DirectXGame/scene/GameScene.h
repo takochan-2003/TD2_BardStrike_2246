@@ -10,8 +10,10 @@
 #include "Skydome.h"
 #include "Player.h"
 #include "FollowCamera.h"
+#include "Item.h"
 
 #include <memory>
+#include <sstream>
 
 /// <summary>
 /// ゲームシーン
@@ -44,23 +46,33 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	/// <summary>
+	/// ポイントアイテム発生データを読み込み
+	/// </summary>
+	void LoadPointPopData();
+
+	/// <summary>
+	/// ポイントアイテム発生コマンドの更新
+	/// </summary>
+	void UpdataPointPopCommands();
+
+	/// <summary>
+	/// ポイントアイテムの生成
+	/// </summary>
+	/// <param name="position"></param>
+	//void PointGenerate(Vector3 position);
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
-	Audio* audio_ = nullptr;
-
-		// テクスチャハンドル
-	uint32_t textureHandle_ = 0u;
-	
-	//スカイドームの3Dモデル
-	Skydome* skydome_ = nullptr;
-	Model* skydomeModel_ = nullptr;
-
-	// 3Dモデル
-	std::unique_ptr<Model> model_;
+	Audio* audio_ = nullptr;	
 
 	// 自キャラの3Dモデル
 	std::unique_ptr<Model> modelPlayer_;
+	//スカイドームの3Dモデル
+	std::unique_ptr<Model> modelSkydome_;
+	//アイテムの3Dモデル
+	std::unique_ptr<Model> modelItem_;
 
 	// ビュープロダクション
 	ViewProjection viewProjection_;
@@ -70,6 +82,15 @@ private: // メンバ変数
 
 	//追従カメラ
 	std::unique_ptr<FollowCamera> followCamera_;
+
+	//スカイドーム
+	std::unique_ptr<Skydome> skydome_;
+
+	//ポイントアイテム
+	std::unique_ptr<Item> item_;
+
+	//　ポイントアイテム発生コマンド
+	std::stringstream pointPopCommnds;
 
 	/// <summary>
 	/// ゲームシーン用
