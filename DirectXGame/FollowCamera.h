@@ -34,6 +34,9 @@ class FollowCamera {
 	/// <returns>ビュープロジェクション</returns>
 	const ViewProjection& GetViewProjection() { return viewProjection_; }
 
+	//カメラの角度取得
+	Vector3 GetViewRotate() { return viewProjection_.rotation_; }
+
 	/// <summary>
 	/// プロジェクション行列計算用のメンバ設定関数群
 	/// </summary>

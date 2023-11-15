@@ -40,6 +40,7 @@ void GameScene::Initialize() {
 	// 自キャラに追従カメラをアドレス渡し
 	player_->SetViewProjection(&followCamera_->GetViewProjection());
 
+	
 }
 
 void GameScene::Update() {
@@ -50,6 +51,9 @@ void GameScene::Update() {
 	// ビュープロジェクションの反映
 	viewProjection_.matView = followCamera_->GetViewProjection().matView;
 	viewProjection_.matProjection = followCamera_->GetViewProjection().matProjection;
+
+	// カメラの向きと自機の向きをそろえる
+	player_->SetViewRotate(followCamera_->GetViewRotate());
 
 		// 自キャラの更新
 	player_->Update();

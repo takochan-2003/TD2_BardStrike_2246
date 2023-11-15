@@ -39,6 +39,9 @@ public:
 	// ワールド座標を取得
 	Vector3 GetWorldPosition();
 
+	//カメラの向きと自機の向きを合わせる
+	void SetViewRotate(const Vector3 parent) { worldTransform_.rotation_ = parent; }
+
 private:
 	// カメラのビュープロジェクション
 	const ViewProjection* viewProjection_ = nullptr;
