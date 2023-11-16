@@ -1,5 +1,6 @@
 ﻿#include "Player.h"
 #include <cassert>
+#include"ImGuiManager.h"
 
 void Player::Initialize(Model* model) {
 	// NULLポインタチェック
@@ -23,6 +24,8 @@ void Player::Update() {
 	// 移動処理
 	// KeyMove();
 	JoyMove();
+
+
 }
 void Player::Draw(ViewProjection& viewProjection) {
 	model_->Draw(worldTransform_, viewProjection);

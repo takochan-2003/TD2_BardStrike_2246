@@ -1,5 +1,6 @@
 ﻿#include "FollowCamera.h"
 #include "MT.h"
+#include "ImGuiManager.h"
 
 FollowCamera::FollowCamera() {}
 
@@ -24,6 +25,13 @@ void FollowCamera::Update() { // ゲームパッドの状態を得る変数
 
 	}
 
+	if (viewProjection_.rotation_.x >= 1.5f) {
+		viewProjection_.rotation_.x = 1.5f;
+	}
+	if (viewProjection_.rotation_.x <= -1.5f) {
+		viewProjection_.rotation_.x = -1.5f;
+	}
+
 	// 追従対象がいれば
 	if (target_) {
 		// 追従対象からカメラまでのオフセット
@@ -39,6 +47,10 @@ void FollowCamera::Update() { // ゲームパッドの状態を得る変数
 		// 座標をコピーしてオフセット分ずらす
 		viewProjection_.translation_ = Add(target_->translation_, offset);
 	}
+
+	ImGui::Begin("Player::ROTATE");
+	ImGui::Text("rotate%f", viewProjection_.rotation_.x, 0.0f, 360.0f);
+	ImGui::End();
 
 	viewProjection_.UpdateMatrix();
 }
