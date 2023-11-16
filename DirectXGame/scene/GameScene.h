@@ -86,11 +86,14 @@ private: // メンバ変数
 	//スカイドーム
 	std::unique_ptr<Skydome> skydome_;
 
-	//ポイントアイテム
-	std::unique_ptr<Item> item_;
+	////ポイントアイテム
+	//std::unique_ptr<Item> item_;
 
 	//　ポイントアイテム発生コマンド
 	std::stringstream pointPopCommnds;
+	//アイテム
+	std::list<std::unique_ptr<Item>> items_;
+
 
 	/// <summary>
 	/// ゲームシーン用

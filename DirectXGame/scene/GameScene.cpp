@@ -26,7 +26,6 @@ void GameScene::Initialize() {
 	//// ワールドトランスフォームの初期化
 	// worldTransform_.Initialize();
 
-	
 	// 自キャラの生成と初期化処理
 	player_ = std::make_unique<Player>();
 	// 3Dモデルの生成
@@ -60,7 +59,7 @@ void GameScene::Update() {
 	// カメラの向きと自機の向きをそろえる
 	player_->SetViewRotate(followCamera_->GetViewRotate());
 
-		// 自キャラの更新
+	// 自キャラの更新
 	player_->Update();
 	// スカイドーム
 	skydome_->Update();
@@ -100,6 +99,12 @@ void GameScene::Draw() {
 	player_->Draw(viewProjection_);
 	skydome_->Draw(viewProjection_);
 
+	// std::list<std::unique_ptr<Item>> items_;
+	// std::unique_ptr<Item> items_[];
+	for (const std::unique_ptr<Item>& item : items_) {
+		item->Draw(viewProjection_);
+	}
+
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion
@@ -133,10 +138,10 @@ void GameScene::LoadPointPopData() {
 void GameScene::UpdataPointPopCommands() {
 
 	// 1行分の文字列を入れる変数
-	 std::string line;
+	std::string line;
 
 	// コマンド実行ループ
-	 while (getline(pointPopCommnds, line)) {
+	while (getline(pointPopCommnds, line)) {
 		std::istringstream line_stream(line);
 
 		std::string word;
@@ -172,7 +177,8 @@ void GameScene::UpdataPointPopCommands() {
 void GameScene::PointGenerate(Vector3 position) {
 
 	// アイテムの生成と初期化処理
-	item_ = std::make_unique<Item>();
-	item_->Initialize(modelItem_.get(),position);
+	Item* item = new Item();
+	item->Initialize(modelItem_.get(), position);
 
+	items_.push_back(static_cast<std::unique_ptr<Item>>(item));
 }
