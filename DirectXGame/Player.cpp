@@ -29,7 +29,7 @@ void Player::Update() {
 
 }
 void Player::Draw(ViewProjection& viewProjection) {
-	model_->Draw(worldTransform_, viewProjection, textureHandle_);
+	model_->Draw(worldTransform_, viewProjection);
 }
 
 void Player::JoyMove() {
@@ -61,6 +61,7 @@ void Player::JoyMove() {
 			worldTransform_.rotation_.y = std::atan2(move.x, move.z);
 		}
 
+		//移動
 		worldTransform_.translation_ = Add(worldTransform_.translation_, move);
 	}
 

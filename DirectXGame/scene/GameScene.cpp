@@ -26,8 +26,11 @@ void GameScene::Initialize() {
 	//// ワールドトランスフォームの初期化
 	// worldTransform_.Initialize();
 
+	
 	// 自キャラの生成と初期化処理
 	player_ = std::make_unique<Player>();
+	// 3Dモデルの生成
+	modelPlayer_.reset(Model::CreateFromOBJ("Player", true));
 	player_->Initialize(modelPlayer_.get());
 	player_->SetViewProjection(&followCamera_->GetViewProjection());
 
@@ -54,7 +57,10 @@ void GameScene::Update() {
 	viewProjection_.matView = followCamera_->GetViewProjection().matView;
 	viewProjection_.matProjection = followCamera_->GetViewProjection().matProjection;
 
-	// 自キャラの更新
+	// カメラの向きと自機の向きをそろえる
+	player_->SetViewRotate(followCamera_->GetViewRotate());
+
+		// 自キャラの更新
 	player_->Update();
 	// スカイドーム
 	skydome_->Update();

@@ -30,11 +30,16 @@ public:
 	// 移動処理
 	void JoyMove();
 
+	void RailMove();
+
 	// ワールドトランスフォーム取得
 	const WorldTransform& GetWorldTransform();
 
 	// ワールド座標を取得
 	Vector3 GetWorldPosition();
+
+	//カメラの向きと自機の向きを合わせる
+	void SetViewRotate(const Vector3 parent) { worldTransform_.rotation_ = parent; }
 
 private:
 	// カメラのビュープロジェクション
@@ -44,8 +49,6 @@ private:
 	WorldTransform worldTransform_;
 	// モデル
 	Model* model_ = nullptr;
-	// テクスチャハンドル
-	uint32_t textureHandle_ = 0u;
 
 	// キーボード入力
 	Input* input_ = nullptr;
