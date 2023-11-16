@@ -30,15 +30,6 @@ void Player::Draw(ViewProjection& viewProjection) {
 	model_->Draw(worldTransform_, viewProjection);
 }
 
-	//worldTransform_.translation_.z += 1;
-
-	//worldTransform_.translation_.z += 0.01f;
-
-}
-void Player::Draw(ViewProjection& viewProjection) {
-	model_->Draw(worldTransform_, viewProjection);
-}
-
 void Player::JoyMove() {
 	// ゲームパッドの状態を得る変数
 	XINPUT_STATE joyState;
