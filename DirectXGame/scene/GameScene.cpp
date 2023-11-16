@@ -15,11 +15,11 @@ void GameScene::Initialize() {
 
 	// 自機の3Dモデルの生成
 	modelPlayer_.reset(Model::CreateFromOBJ("cube", true));
-	//スカイドームの3Dモデルの生成
+	// スカイドームの3Dモデルの生成
 	modelSkydome_.reset(Model::CreateFromOBJ("skydome", true));
-	//アイテムの3Dモデルの生成
-	//modelItem_.reset(Model::CreateFromOBJ("", true));
-	
+	// アイテムの3Dモデルの生成
+	modelItem_.reset(Model::CreateFromOBJ("cube", true));
+
 	// ビューポートプロジェクションの初期化
 	viewProjection_.Initialize();
 
@@ -39,10 +39,6 @@ void GameScene::Initialize() {
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Initialize();
 
-	//アイテムの生成と初期化処理
-	item_ = std::make_unique<Item>();
-	item_->Initialize();
-
 	// 自キャラのワールドトランスフォームを追従カメラのセット
 	followCamera_->SetTarget(&player_->GetWorldTransform());
 	// 自キャラに追従カメラをアドレス渡し
@@ -60,7 +56,7 @@ void GameScene::Update() {
 
 	// 自キャラの更新
 	player_->Update();
-	//スカイドーム
+	// スカイドーム
 	skydome_->Update();
 
 	// ビュープロジェクション行列の転送
@@ -130,41 +126,47 @@ void GameScene::LoadPointPopData() {
 
 void GameScene::UpdataPointPopCommands() {
 
-	//// 1行分の文字列を入れる変数
-	//std::string line;
+	// 1行分の文字列を入れる変数
+	 std::string line;
 
-	//// コマンド実行ループ
-	//while (getline(pointPopCommnds, line)) {
-	//	std::istringstream line_stream(line);
+	// コマンド実行ループ
+	 while (getline(pointPopCommnds, line)) {
+		std::istringstream line_stream(line);
 
-	//	std::string word;
-	//	// 　,区切りで行の先頭文字列を所得
+		std::string word;
+		// 　,区切りで行の先頭文字列を所得
 
-	//	getline(line_stream, word, ',');
+		getline(line_stream, word, ',');
 
-	//	// "//"から始まる行はコメント
-	//	if (word.find("//") == 0) {
-	//		// コメント行を飛ばす
-	//		continue;
-	//	}
+		// "//"から始まる行はコメント
+		if (word.find("//") == 0) {
+			// コメント行を飛ばす
+			continue;
+		}
 
-	//	// POPコマンド
-	//	if (word.find("POP") == 0) {
-	//		// x座標
-	//		getline(line_stream, word, ',');
-	//		float x = (float)std::atof(word.c_str());
+		// POPコマンド
+		if (word.find("POP") == 0) {
+			// x座標
+			getline(line_stream, word, ',');
+			float x = (float)std::atof(word.c_str());
 
-	//		// y座標
-	//		getline(line_stream, word, ',');
-	//		float y = (float)std::atof(word.c_str());
+			// y座標
+			getline(line_stream, word, ',');
+			float y = (float)std::atof(word.c_str());
 
-	//		// z座標
-	//		getline(line_stream, word, ',');
-	//		float z = (float)std::atof(word.c_str());
+			// z座標
+			getline(line_stream, word, ',');
+			float z = (float)std::atof(word.c_str());
 
-	//		//PointGenerate({x, y, z});
-	//	}
-	//}
+			PointGenerate({x, y, z});
+		}
+	}
 }
 
-//void GameScene::PointGenerate(Vector3 position) {}
+void GameScene::PointGenerate(Vector3 position) {
+
+	// アイテムの生成と初期化処理
+	item_ = std::make_unique<Item>();
+	item_->Initialize(modelItem_.get(),position);
+
+}
