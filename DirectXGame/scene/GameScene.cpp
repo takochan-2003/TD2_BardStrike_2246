@@ -26,6 +26,9 @@ void GameScene::Initialize() {
 	//// ワールドトランスフォームの初期化
 	// worldTransform_.Initialize();
 
+	// CSVファイル読み込み
+	LoadPointPopData();
+
 	// 自キャラの生成と初期化処理
 	player_ = std::make_unique<Player>();
 	// 3Dモデルの生成
@@ -63,6 +66,9 @@ void GameScene::Update() {
 	player_->Update();
 	// スカイドーム
 	skydome_->Update();
+
+	// CSVファイルの更新処理
+	UpdataPointPopCommands();
 
 	// ビュープロジェクション行列の転送
 	viewProjection_.TransferMatrix();
@@ -125,7 +131,7 @@ void GameScene::Draw() {
 
 void GameScene::LoadPointPopData() {
 	std::ifstream file;
-	file.open("");
+	file.open("Resources/ItemPop.csv");
 	assert(file.is_open());
 
 	// ファイルの内容を文字列ストリームにコピー
@@ -136,6 +142,16 @@ void GameScene::LoadPointPopData() {
 }
 
 void GameScene::UpdataPointPopCommands() {
+
+	// 待機処理
+	if (standFlag) {
+		standTime--;
+		if (standTime <= 0) {
+			// 待機完了
+			standFlag = false;
+		}
+		return;
+	}
 
 	// 1行分の文字列を入れる変数
 	std::string line;
@@ -170,6 +186,19 @@ void GameScene::UpdataPointPopCommands() {
 			float z = (float)std::atof(word.c_str());
 
 			PointGenerate({x, y, z});
+		} // WAITコマンド
+		else if (word.find("WAIT") == 0) {
+			getline(line_stream, word, ',');
+
+			// 待ち時間
+			int32_t waitTime = atoi(word.c_str());
+
+			// 待機時間
+			standFlag = true;
+			standTime = waitTime;
+
+			// コマンドループを抜ける
+			break; 
 		}
 	}
 }

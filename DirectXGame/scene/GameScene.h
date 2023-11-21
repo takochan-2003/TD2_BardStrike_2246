@@ -2,15 +2,15 @@
 
 #include "Audio.h"
 #include "DirectXCommon.h"
+#include "FollowCamera.h"
 #include "Input.h"
+#include "Item.h"
 #include "Model.h"
+#include "Player.h"
+#include "Skydome.h"
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-#include "Skydome.h"
-#include "Player.h"
-#include "FollowCamera.h"
-#include "Item.h"
 
 #include <memory>
 #include <sstream>
@@ -65,13 +65,13 @@ public: // メンバ関数
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
-	Audio* audio_ = nullptr;	
+	Audio* audio_ = nullptr;
 
 	// 自キャラの3Dモデル
 	std::unique_ptr<Model> modelPlayer_;
-	//スカイドームの3Dモデル
+	// スカイドームの3Dモデル
 	std::unique_ptr<Model> modelSkydome_;
-	//アイテムの3Dモデル
+	// アイテムの3Dモデル
 	std::unique_ptr<Model> modelItem_;
 
 	// ビュープロダクション
@@ -80,20 +80,24 @@ private: // メンバ変数
 	// 自キャラ
 	std::unique_ptr<Player> player_;
 
-	//追従カメラ
+	// 追従カメラ
 	std::unique_ptr<FollowCamera> followCamera_;
 
-	//スカイドーム
+	// スカイドーム
 	std::unique_ptr<Skydome> skydome_;
 
 	////ポイントアイテム
-	//std::unique_ptr<Item> item_;
+	// std::unique_ptr<Item> item_;
 
-	//　ポイントアイテム発生コマンド
+	// 　ポイントアイテム発生コマンド
 	std::stringstream pointPopCommnds;
-	//アイテム
+	// アイテム
 	std::list<std::unique_ptr<Item>> items_;
 
+private:
+	// 待機時間
+	bool standFlag = false;
+	int standTime = 0;
 
 	/// <summary>
 	/// ゲームシーン用
