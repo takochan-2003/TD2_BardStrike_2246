@@ -1,5 +1,6 @@
 ﻿#include "FollowCamera.h"
 #include "MT.h"
+#include "ImGuiManager.h"
 
 FollowCamera::FollowCamera() {}
 
@@ -17,12 +18,18 @@ void FollowCamera::Update() { // ゲームパッドの状態を得る変数
 	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
 
 		// 速さ
-		const float rotation = 0.1f;
+		const float rotation = 0.01f;
 
 		viewProjection_.rotation_.y += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * rotation;
-
 		viewProjection_.rotation_.x -= (float)joyState.Gamepad.sThumbRY / SHRT_MAX * rotation;
 
+	}
+
+	if (viewProjection_.rotation_.x >= 1.5f) {
+		viewProjection_.rotation_.x = 1.5f;
+	}
+	if (viewProjection_.rotation_.x <= -1.5f) {
+		viewProjection_.rotation_.x = -1.5f;
 	}
 
 	// 追従対象がいれば
@@ -30,17 +37,20 @@ void FollowCamera::Update() { // ゲームパッドの状態を得る変数
 		// 追従対象からカメラまでのオフセット
 		Vector3 offset = {0.0f, 2.0f, -10.0f};
 
-		Matrix4x4 rotationMatrixY;
-		//Matrix4x4 rotationMatrixX;
+		Matrix4x4 rotateXMatrix = MakeRotateXmatrix(viewProjection_.rotation_.x);
+		Matrix4x4 rotateYMatrix = MakeRotateYmatrix(viewProjection_.rotation_.y);
+		Matrix4x4 rotateZMatrix = MakeRotateZmatrix(viewProjection_.rotation_.z);
+		Matrix4x4 rotateXYZMatrix = Multiply(rotateXMatrix, Multiply(rotateYMatrix, rotateZMatrix));
 
-		rotationMatrixY = MakeRotateYmatrix(viewProjection_.rotation_.y);
-		//rotationMatrixX = MakeRotateXmatrix(viewProjection_.rotation_.x);
-
-		offset = TransformNormal(offset, rotationMatrixY);
+		offset = TransformNormal(offset, rotateXYZMatrix);
 
 		// 座標をコピーしてオフセット分ずらす
 		viewProjection_.translation_ = Add(target_->translation_, offset);
 	}
+
+	ImGui::Begin("Player::ROTATE");
+	ImGui::Text("rotate%f", viewProjection_.rotation_.x, 0.0f, 360.0f);
+	ImGui::End();
 
 	viewProjection_.UpdateMatrix();
 }

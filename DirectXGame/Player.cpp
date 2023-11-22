@@ -1,5 +1,6 @@
 ﻿#include "Player.h"
 #include <cassert>
+#include"ImGuiManager.h"
 
 void Player::Initialize(Model* model) {
 	// NULLポインタチェック
@@ -23,9 +24,6 @@ void Player::Update() {
 	// 移動処理
 	JoyMove();
 
-	//worldTransform_.translation_.z += 1;
-
-	//worldTransform_.translation_.z += 0.01f;
 
 }
 void Player::Draw(ViewProjection& viewProjection) {
@@ -40,6 +38,7 @@ void Player::JoyMove() {
 	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
 		// 移動速度
 		const float kCharacterSpeed = 0.5f;
+		//↓変更点
 		Vector3 move = {
 		    (float)joyState.Gamepad.sThumbLX / SHRT_MAX * kCharacterSpeed,
 		    0.0f,
