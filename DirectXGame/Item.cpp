@@ -9,6 +9,8 @@ void Item::Initialize(Model* model, Vector3 position) {
 	// ポジション
 	worldTransform_.translation_ = position;
 
+	worldTransform_.scale_ = {9, 9, 9};
+
 	// ワールド変換の初期化
 	worldTransform_.Initialize();
 
