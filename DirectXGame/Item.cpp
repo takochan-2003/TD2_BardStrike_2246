@@ -11,8 +11,10 @@ void Item::Initialize(Model* model,Vector3 position) {
 
 	// ワールド変換の初期化
 	worldTransform_.Initialize();
+
+	 worldTransform_.UpdateMatrix();
 }
 
-void Item::Update() {}
+void Item::Update() { worldTransform_.UpdateMatrix(); }
 
 void Item::Draw(ViewProjection& viewProjection) { model_->Draw(worldTransform_, viewProjection); }
