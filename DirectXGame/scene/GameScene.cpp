@@ -129,6 +129,17 @@ void GameScene::Draw() {
 #pragma endregion
 }
 
+void GameScene::CheckAllCollisions() {
+
+	Vector3 posA, posB;
+
+		for (const std::unique_ptr<Item>& item : items_) {
+
+		}
+
+
+}
+
 void GameScene::LoadPointPopData() {
 	std::ifstream file;
 	file.open("Resources/ItemPop.csv");
