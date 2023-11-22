@@ -1,11 +1,22 @@
 ﻿#include "Item.h"
+#include <cassert>
 
-void Item::Initialize() {
+void Item::Initialize(Model* model, Vector3 position) {
+	// NULLポインタチェック
+	assert(model);
+	// 引数からデータを受け取る
+	model_ = model;
+	// ポジション
+	worldTransform_.translation_ = position;
 
+	worldTransform_.scale_ = {9, 9, 9};
 
+	// ワールド変換の初期化
+	worldTransform_.Initialize();
 
+	worldTransform_.UpdateMatrix();
 }
 
-void Item::Update() {}
+void Item::Update() { worldTransform_.UpdateMatrix(); }
 
-void Item::Draw() {}
+void Item::Draw(ViewProjection& viewProjection) { model_->Draw(worldTransform_, viewProjection); }

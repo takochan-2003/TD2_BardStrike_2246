@@ -1,14 +1,15 @@
 ﻿#pragma once
 
 #include "WorldTransform.h"
-#include "MT.h"
+#include "ViewProjection.h"
+#include "Model.h"
 
 class Item {
 public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize();
+	void Initialize(Model* model,Vector3 position);
 
 	/// <summary>
 	/// 毎フレーム処理
@@ -18,11 +19,13 @@ public:
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	void Draw(ViewProjection& viewProjection);
 
 private:
 
-	WorldTransform worldTrasform_;
+	WorldTransform worldTransform_;
 
+	// モデル
+	Model* model_ = nullptr;
 
 };
