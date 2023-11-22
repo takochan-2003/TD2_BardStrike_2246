@@ -134,7 +134,7 @@ void Player::JoyMove() {
 void Player::AutoMove() {
 
 		// 移動速度
-		const float kCharacterSpeed = 0.5f;
+		const float kCharacterSpeed = 1.0f;
 
 		Vector3 move = {0, 0, 1};
 
