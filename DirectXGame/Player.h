@@ -31,6 +31,8 @@ public:
 	void KeyMove();
 	void JoyMove();
 
+	void AutoMove();
+
 	void RailMove();
 
 	// ワールドトランスフォーム取得
