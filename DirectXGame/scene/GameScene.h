@@ -47,6 +47,11 @@ public: // メンバ関数
 	void Draw();
 
 	/// <summary>
+	/// 当たり判定
+	/// </summary>
+	void CheckAllCollision();
+
+	/// <summary>
 	/// ポイントアイテム発生データを読み込み
 	/// </summary>
 	void LoadPointPopData();

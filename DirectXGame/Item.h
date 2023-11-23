@@ -21,11 +21,27 @@ public:
 	/// </summary>
 	void Draw(ViewProjection& viewProjection);
 
+	// ワールド座標を取得
+	Vector3 GetWorldPosition();
+
+	void OnCollision();
+
+	bool IsDead() const { return isDead_; }
+
+	//getter
+	float GetRadius() { return radius_; }
+
 private:
 
 	WorldTransform worldTransform_;
 
 	// モデル
 	Model* model_ = nullptr;
+
+	// デスフラグ
+	bool isDead_ = false;
+
+	//半径
+	float radius_ = 32;
 
 };

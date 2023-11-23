@@ -41,6 +41,9 @@ public:
 	//カメラの向きと自機の向きを合わせる
 	void SetViewRotate(const Vector3 parent) { worldTransform_.rotation_ = parent; }
 
+	// getter
+	float GetRadius() { return radius_; }
+
 private:
 	// カメラのビュープロジェクション
 	const ViewProjection* viewProjection_ = nullptr;
@@ -52,4 +55,8 @@ private:
 
 	// キーボード入力
 	Input* input_ = nullptr;
+
+	//半径
+	float radius_ = 32;
+
 };

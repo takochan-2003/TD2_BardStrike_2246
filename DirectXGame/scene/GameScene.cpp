@@ -72,6 +72,16 @@ void GameScene::Update() {
 
 	// ビュープロジェクション行列の転送
 	viewProjection_.TransferMatrix();
+
+	// デスフラグの立ったアイテムを削除
+	items_.remove_if([](Item* item) {
+		if (item->IsDead()) {
+			delete item;
+			return true;
+		}
+		return false;
+	});
+
 }
 
 void GameScene::Draw() {
@@ -127,6 +137,31 @@ void GameScene::Draw() {
 	Sprite::PostDraw();
 
 #pragma endregion
+}
+
+void GameScene::CheckAllCollision() { 
+	Vector3 posA, posB;
+
+
+
+	for (const std::unique_ptr<Item>& item : items_) {
+		posA = player_->GetWorldPosition();
+
+		posB = item->GetWorldPosition();
+
+		float Hit = (posA.x - posB.x) * (posA.x - posB.x) + (posA.y - posB.y) * (posA.y - posB.y) +
+		            (posA.z - posB.z) * (posA.z - posB.z);
+
+		float Radius =
+		    (player_->GetRadius() + item->GetRadius()) * (player_->GetRadius() + item->GetRadius()); 
+
+		if (Hit <= Radius) {
+			item->OnCollision();
+		}
+
+	}
+
+
 }
 
 void GameScene::LoadPointPopData() {
@@ -198,7 +233,7 @@ void GameScene::UpdataPointPopCommands() {
 			standTime = waitTime;
 
 			// コマンドループを抜ける
-			break; 
+			break;
 		}
 	}
 }
