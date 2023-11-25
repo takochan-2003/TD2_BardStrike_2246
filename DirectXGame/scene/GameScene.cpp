@@ -73,10 +73,13 @@ void GameScene::Update() {
 	// ビュープロジェクション行列の転送
 	viewProjection_.TransferMatrix();
 
+	CheckAllCollision();
+
+
 	// デスフラグの立ったアイテムを削除
-	items_.remove_if([](Item* item) {
+	items_.remove_if([](const std::unique_ptr<Item>& item) {
 		if (item->IsDead()) {
-			delete item;
+			//delete item;
 			return true;
 		}
 		return false;
@@ -142,8 +145,6 @@ void GameScene::Draw() {
 void GameScene::CheckAllCollision() { 
 	Vector3 posA, posB;
 
-
-
 	for (const std::unique_ptr<Item>& item : items_) {
 		posA = player_->GetWorldPosition();
 
@@ -158,10 +159,7 @@ void GameScene::CheckAllCollision() {
 		if (Hit <= Radius) {
 			item->OnCollision();
 		}
-
 	}
-
-
 }
 
 void GameScene::LoadPointPopData() {
