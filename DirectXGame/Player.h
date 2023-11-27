@@ -46,6 +46,12 @@ public:
 	// getter
 	float GetRadius() { return radius_; }
 
+	//スカイドームから出たときの判定
+	void SkydomeLeave();
+
+	//元の位置に戻す処理
+	void ResetPosition();
+
 private:
 	// カメラのビュープロジェクション
 	const ViewProjection* viewProjection_ = nullptr;
