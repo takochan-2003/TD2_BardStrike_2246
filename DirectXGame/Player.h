@@ -30,6 +30,8 @@ public:
 	// 移動処理
 	void JoyMove();
 
+	void AutoMove();
+
 	void RailMove();
 
 	// ワールドトランスフォーム取得

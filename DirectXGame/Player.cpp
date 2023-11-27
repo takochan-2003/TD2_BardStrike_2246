@@ -22,8 +22,9 @@ void Player::Initialize(Model* model) {
 void Player::Update() {
 
 	// 移動処理
-	JoyMove();
-
+	//KeyMove();
+	//JoyMove();
+	AutoMove();
 
 }
 void Player::Draw(ViewProjection& viewProjection) {
@@ -39,11 +40,13 @@ void Player::JoyMove() {
 		// 移動速度
 		const float kCharacterSpeed = 0.5f;
 		//↓変更点
-		Vector3 move = {
-		    (float)joyState.Gamepad.sThumbLX / SHRT_MAX * kCharacterSpeed,
-		    0.0f,
-		    (float)joyState.Gamepad.sThumbLY / SHRT_MAX * kCharacterSpeed,
-		};
+		//Vector3 move = {
+		//    (float)joyState.Gamepad.sThumbLX / SHRT_MAX * kCharacterSpeed,
+		//    0.0f,
+		//    (float)joyState.Gamepad.sThumbLY / SHRT_MAX * kCharacterSpeed,
+		//};
+
+		Vector3 move = {0, 0, 1};
 
 		// カメラの角度から回転行列を計算する
 		Matrix4x4 rotateXMatrix = MakeRotateXmatrix(viewProjection_->rotation_.x);
@@ -63,6 +66,35 @@ void Player::JoyMove() {
 		//移動
 		worldTransform_.translation_ = Add(worldTransform_.translation_, move);
 	}
+
+	// 行列を更新
+	worldTransform_.UpdateMatrix();
+}
+
+void Player::AutoMove() {
+
+		// 移動速度
+		const float kCharacterSpeed = 1.0f;
+
+		Vector3 move = {0, 0, 1};
+
+		// カメラの角度から回転行列を計算する
+		Matrix4x4 rotateXMatrix = MakeRotateXmatrix(viewProjection_->rotation_.x);
+		Matrix4x4 rotateYMatrix = MakeRotateYmatrix(viewProjection_->rotation_.y);
+		Matrix4x4 rotateZMatrix = MakeRotateZmatrix(viewProjection_->rotation_.z);
+		Matrix4x4 rotateXYZMatrix = Multiply(rotateXMatrix, Multiply(rotateYMatrix, rotateZMatrix));
+
+		// 移動量に速さを反映
+		move = Multiply(kCharacterSpeed, Normalize(move));
+
+		move = TransformNormal(move, rotateXYZMatrix);
+
+		if (move.z != 0 || move.y != 0) {
+			worldTransform_.rotation_.y = std::atan2(move.x, move.z);
+		}
+
+		// 移動
+		worldTransform_.translation_ = Add(worldTransform_.translation_, move);
 
 	// 行列を更新
 	worldTransform_.UpdateMatrix();
