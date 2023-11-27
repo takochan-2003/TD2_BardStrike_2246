@@ -143,3 +143,20 @@ Vector3 Player::GetWorldPosition() {
 
 	return worldPos;
 }
+
+void Player::ResetPosition() {
+
+	// ワールド変換の初期化
+	worldTransform_.Initialize();
+	// ビュープロジェクションの初期化
+
+	worldTransform_.scale_ = {1.0f, 1.0f, 1.0f};
+	worldTransform_.rotation_ = {0.0f, 0.0f, 0.0f};
+	worldTransform_.translation_ = {0.0f, 0.0f, 0.0f};
+
+	// シングルトンインスタンスを取得する
+	input_ = Input::GetInstance();
+
+}
+
+void Player::SkydomeLeave() { Player::ResetPosition(); }
