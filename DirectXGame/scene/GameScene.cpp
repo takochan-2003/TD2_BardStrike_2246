@@ -51,6 +51,7 @@ void GameScene::Initialize() {
 
 	isSceneEnd = false;
 
+	//ゲームの制限時間
 	SceneEndTitle = 60;
 
 }
