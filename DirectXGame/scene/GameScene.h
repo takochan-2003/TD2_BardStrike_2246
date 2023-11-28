@@ -11,6 +11,7 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
+#include "Scene.h"
 
 #include <memory>
 #include <sstream>
@@ -67,6 +68,10 @@ public: // メンバ関数
 	/// <param name="position"></param>
 	void PointGenerate(Vector3 position);
 
+	bool IsSceneEnd() { return isSceneEnd; }
+
+	Scene NextScene() { return Scene::RESULT; }
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -103,6 +108,9 @@ private:
 	// 待機時間
 	bool standFlag = false;
 	int standTime = 0;
+
+		// シーンを終わらせるフラグ
+	bool isSceneEnd = false;
 
 	/// <summary>
 	/// ゲームシーン用

@@ -75,7 +75,6 @@ void GameScene::Update() {
 
 	CheckAllCollision();
 
-
 	// デスフラグの立ったアイテムを削除
 	items_.remove_if([](const std::unique_ptr<Item>& item) {
 		if (item->IsDead()) {
