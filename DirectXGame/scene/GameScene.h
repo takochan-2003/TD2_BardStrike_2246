@@ -72,6 +72,16 @@ public: // メンバ関数
 
 	Scene NextScene() { return Scene::RESULT; }
 
+	/// <summary>
+	/// スコアの描画処理
+	/// </summary>
+	void GamePlayDraw2DNear();
+
+	/// <summary>
+	/// スコアの計算と描画処理
+	/// </summary>
+	void DrawScore();
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -114,6 +124,15 @@ private:
 
 		// シーンを終わらせるフラグ
 	bool isSceneEnd = false;
+
+	// ナンバー
+	uint32_t textureHandleNumber = 0;
+	Sprite* spriteNumber_[4] = {};
+
+	// スコア
+	uint32_t textureHandleSCORE = 0;
+	Sprite* spriteScore = {};
+	int gameScore = 0;
 
 	/// <summary>
 	/// ゲームシーン用

@@ -1,8 +1,13 @@
 ﻿#include "TitleScene.h"
 
 void TitleScene::Initialize() {
+	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	isSceneEnd = false;
+
+	//背景のスプライト
+	textureHandle_ = TextureManager::Load("uvChecker.png");
+	sprite_ = Sprite::Create(textureHandle_, {640, 350}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.5f, 0.5f});
 }
 
 void TitleScene::Updata() {
@@ -30,6 +35,8 @@ void TitleScene::Draw() {
 	/// <summary>
 	/// ここに背景スプライトの描画処理を追加できる
 	/// </summary>
+
+	sprite_->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
