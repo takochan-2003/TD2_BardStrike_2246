@@ -22,11 +22,12 @@ public:
 	Scene NextScene() { return Scene::GAME; }
 
 private:
-
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 
 	// シーンを終わらせるフラグ
 	bool isSceneEnd = false;
+	uint32_t textureHandle_ = 0;
+	Sprite* sprite_ = nullptr;
 
 };
