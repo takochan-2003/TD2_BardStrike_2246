@@ -159,6 +159,17 @@ void GameScene::CheckAllCollision() {
 			item->OnCollision();
 		}
 	}
+	posA = player_->GetWorldPosition();
+	posB = skydome_->GetWorldPosition();
+
+	float Leave = (posA.x - posB.x) * (posA.x - posB.x) + (posA.y - posB.y) * (posA.y - posB.y) +
+	              (posA.z - posB.z) * (posA.z - posB.z);
+
+	float Radius = (player_->GetRadius() + skydome_->GetRadius()) *(player_->GetRadius() + skydome_->GetRadius());
+
+	if (Leave >= Radius) {
+		player_->ResetPosition();
+	}
 }
 
 void GameScene::LoadPointPopData() {

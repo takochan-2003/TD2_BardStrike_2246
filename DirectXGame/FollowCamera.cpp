@@ -14,6 +14,8 @@ void FollowCamera::Initialize() {
 void FollowCamera::Update() { // ゲームパッドの状態を得る変数
 	XINPUT_STATE joyState;
 
+	float zoom = 0.0f;
+
 	// ゲームパッド状態取得、ゲームパッドが有効の場合if文が通る
 	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
 
@@ -22,6 +24,9 @@ void FollowCamera::Update() { // ゲームパッドの状態を得る変数
 
 		viewProjection_.rotation_.y += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * rotation;
 		viewProjection_.rotation_.x -= (float)joyState.Gamepad.sThumbRY / SHRT_MAX * rotation;
+
+		//左スティックでカメラの寄りと引きを動かす
+		zoom = (float)joyState.Gamepad.sThumbLY / SHRT_MAX* 1.0f;
 
 	}
 
@@ -49,7 +54,7 @@ void FollowCamera::Update() { // ゲームパッドの状態を得る変数
 	}
 
 	ImGui::Begin("Player::ROTATE");
-	ImGui::Text("rotate%f", viewProjection_.rotation_.x, 0.0f, 360.0f);
+	ImGui::Text("rotate%f", viewProjection_.rotation_.z, 0.0f, 360.0f);
 	ImGui::End();
 
 	viewProjection_.UpdateMatrix();
