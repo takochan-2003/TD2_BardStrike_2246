@@ -93,9 +93,9 @@ void Player::AutoMove() {
 			moveSpeed = -0.6f;
 		 }
 
-		ImGui::Begin("MoveSpeed");
+		/*ImGui::Begin("MoveSpeed");
 		ImGui::Text("moveSpeed:%f", moveSpeed, 0.0f, 360.0f);
-		ImGui::End();
+		ImGui::End();*/
 		}
 
 
@@ -124,9 +124,9 @@ void Player::AutoMove() {
 		// 移動
 		worldTransform_.translation_ = Add(worldTransform_.translation_, move);
 
-		ImGui::Begin("Move");
+		/*ImGui::Begin("Move");
 	    ImGui::Text("move:%f", move.z, 0.0f, 360.0f);
-	    ImGui::End();
+	    ImGui::End();*/
 
 	// 行列を更新
 	worldTransform_.UpdateMatrix();

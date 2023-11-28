@@ -53,9 +53,9 @@ void FollowCamera::Update() { // ゲームパッドの状態を得る変数
 		viewProjection_.translation_ = Add(target_->translation_, offset);
 	}
 
-	ImGui::Begin("Player::ROTATE");
+	/*ImGui::Begin("Player::ROTATE");
 	ImGui::Text("rotate%f", viewProjection_.rotation_.z, 0.0f, 360.0f);
-	ImGui::End();
+	ImGui::End();*/
 
 	viewProjection_.UpdateMatrix();
 }
