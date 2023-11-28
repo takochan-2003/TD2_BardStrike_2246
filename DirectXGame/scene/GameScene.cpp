@@ -48,9 +48,16 @@ void GameScene::Initialize() {
 	followCamera_->SetTarget(&player_->GetWorldTransform());
 	// 自キャラに追従カメラをアドレス渡し
 	player_->SetViewProjection(&followCamera_->GetViewProjection());
+
+	isSceneEnd = false;
+
+	SceneEndTitle = 60;
+
 }
 
 void GameScene::Update() {
+
+	SceneEndTitle--;
 
 	// 追従カメラの更新
 	followCamera_->Update();
@@ -83,6 +90,10 @@ void GameScene::Update() {
 		}
 		return false;
 	});
+
+	if (SceneEndTitle <= 0) {
+		isSceneEnd = true;
+	}
 
 }
 

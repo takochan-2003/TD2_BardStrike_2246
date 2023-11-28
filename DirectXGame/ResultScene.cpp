@@ -1,8 +1,15 @@
 ﻿#include "ResultScene.h"
 
-void ResultScene::Initialize() {}
+void ResultScene::Initialize() {
+	input_ = Input::GetInstance();
+	isSceneEnd = false;
+}
 
-void ResultScene::Updata() {}
+void ResultScene::Updata() {
+	if (input_->TriggerKey(DIK_SPACE)) {
+		isSceneEnd = true;
+	}
+}
 
 void ResultScene::Draw() {
 

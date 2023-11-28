@@ -17,7 +17,7 @@ public:
 
 	bool IsSceneEnd() { return isSceneEnd; }
 
-	Scene NextScene() { return Scene::GAME; }
+	Scene NextScene() { return Scene::TITLE; }
 
 private:
 	DirectXCommon* dxCommon_ = nullptr;

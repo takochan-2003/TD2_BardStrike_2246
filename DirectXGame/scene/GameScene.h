@@ -107,7 +107,10 @@ private: // メンバ変数
 private:
 	// 待機時間
 	bool standFlag = false;
+
 	int standTime = 0;
+
+	int SceneEndTitle = 0;
 
 		// シーンを終わらせるフラグ
 	bool isSceneEnd = false;
