@@ -139,7 +139,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		switch (scene) {
 		case Scene::TITLE:
 			// タイトルシーンの描画
-			titleScene->Draw();
+			//titleScene->Draw();
 
 			break;
 		case Scene::GAME:
@@ -149,7 +149,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		case Scene::RESULT:
 			// リザルトシーンの描画
-			resultScene->Draw();
+			//resultScene->Draw();
 
 			break;
 		}
