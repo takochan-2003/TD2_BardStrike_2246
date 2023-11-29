@@ -63,6 +63,11 @@ void GameScene::Initialize() {
 	// スコアのスプライト描画
 	spriteScore = Sprite::Create(textureHandleSCORE, {0.0f, 10});
 
+	//BGM
+	BGM_ = audio_->LoadWave("Lada.wav");
+
+	Sound_ = audio_->PlayWave(BGM_, true);
+
 }
 
 void GameScene::Update() {
@@ -277,6 +282,8 @@ void GameScene::PointGenerate(Vector3 position) {
 
 	items_.push_back(static_cast<std::unique_ptr<Item>>(item));
 }
+
+void GameScene::BGM() {}
 
 void GameScene::GamePlayDraw2DNear() {
 	spriteScore->Draw();

@@ -68,6 +68,8 @@ public: // メンバ関数
 	/// <param name="position"></param>
 	void PointGenerate(Vector3 position);
 
+	void BGM();
+
 	bool IsSceneEnd() { return isSceneEnd; }
 
 	Scene NextScene() { return Scene::RESULT; }
@@ -133,6 +135,10 @@ private:
 	uint32_t textureHandleSCORE = 0;
 	Sprite* spriteScore = {};
 	int gameScore = 0;
+
+	//BGM
+	uint32_t BGM_ = 0;
+	uint32_t Sound_ = 0;
 
 	/// <summary>
 	/// ゲームシーン用
