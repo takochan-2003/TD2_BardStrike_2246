@@ -17,5 +17,5 @@ private:
 	WorldTransform worldTransform_;
 	Model* model_ = nullptr;
 	// 半径
-	float radius_ = 380;
+	float radius_ = 400;
 };
