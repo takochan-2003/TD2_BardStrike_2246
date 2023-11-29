@@ -70,6 +70,8 @@ public: // メンバ関数
 
 	bool IsSceneEnd() { return isSceneEnd; }
 
+	void StopBGM();
+
 	Scene NextScene() { return Scene::RESULT; }
 
 	/// <summary>
