@@ -7,9 +7,7 @@
 #include "Model.h"
 #include "Sprite.h"
 #include "ViewProjection.h"
-
-
-class TitleScene {
+class ExScene {
 public:
 	void Initialize();
 
@@ -19,7 +17,7 @@ public:
 
 	bool IsSceneEnd() { return isSceneEnd; }
 
-	Scene NextScene() { return Scene::EX; }
+	Scene NextScene() { return Scene::GAME; }
 
 private:
 	DirectXCommon* dxCommon_ = nullptr;
@@ -29,5 +27,4 @@ private:
 	bool isSceneEnd = false;
 	uint32_t textureHandle_ = 0;
 	Sprite* sprite_ = nullptr;
-
 };

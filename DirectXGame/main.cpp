@@ -1,6 +1,7 @@
 #include "Audio.h"
 #include "AxisIndicator.h"
 #include "DirectXCommon.h"
+#include "ExScene.h"
 #include "GameScene.h"
 #include "ImGuiManager.h"
 #include "PrimitiveDrawer.h"
@@ -22,6 +23,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	GameScene* gameScene = nullptr;
 	TitleScene* titleScene = nullptr;
 	ResultScene* resultScene = nullptr;
+	ExScene* exScene = nullptr;
 
 	// ゲームウィンドウの作成
 	win = WinApp::GetInstance();
@@ -74,6 +76,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	resultScene = new ResultScene;
 	resultScene->Initialize();
 
+	exScene = new ExScene;
+	exScene->Initialize();
+
 	Scene scene = Scene::TITLE;
 
 	// メインループ
@@ -101,16 +106,30 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			titleScene->Updata();
 
 			break;
+
+		case Scene::EX:
+
+			if (exScene->IsSceneEnd() == true) {
+				// 次のシーンを値を代入してシーン切り替え
+				scene = exScene->NextScene();
+				exScene->Initialize();
+			}
+
+			// タイトルシーンの毎フレーム処理
+			exScene->Updata();
+
+			break;
+
 		case Scene::GAME:
+
+			// ゲームシーンの毎フレーム処理
+			gameScene->Update();
 
 			if (gameScene->IsSceneEnd() == true) {
 				// 次のシーンを値を代入してシーン切り替え
 				scene = gameScene->NextScene();
 				gameScene->Initialize();
 			}
-
-			// ゲームシーンの毎フレーム処理
-			gameScene->Update();
 
 			break;
 
@@ -142,6 +161,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			titleScene->Draw();
 
 			break;
+
+		case Scene::EX:
+
+			exScene->Draw();
+
+			break;
+
 		case Scene::GAME:
 			// ゲームシーンの描画
 			gameScene->Draw();

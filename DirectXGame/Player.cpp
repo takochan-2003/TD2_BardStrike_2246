@@ -93,7 +93,7 @@ void Player::AutoMove() {
 		    worldTransform_.translation_.x, worldTransform_.translation_.y,
 		    worldTransform_.translation_.z};
 
-		ImGui::SliderFloat3("Positon", Position, -30, 30);
+		ImGui::SliderFloat3("Positon", Position, -300, 300);
 
 		worldTransform_.translation_.x = Position[0];
 		worldTransform_.translation_.y = Position[1];

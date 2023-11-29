@@ -48,6 +48,6 @@ private:
 	bool isDead_ = false;
 
 	//半径
-	float radius_ = 32;
+	float radius_ = 2;
 
 };
