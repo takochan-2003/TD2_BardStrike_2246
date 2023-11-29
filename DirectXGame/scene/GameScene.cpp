@@ -288,7 +288,6 @@ void GameScene::PointGenerate(Vector3 position) {
 
 void GameScene::StopBGM() {
 	audio_->StopWave(Sound_);
-	//Sound_ = audio_->PlayWave(BGM_, true);
 }
 
 void GameScene::GamePlayDraw2DNear() {
