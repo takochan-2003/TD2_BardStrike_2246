@@ -36,5 +36,6 @@ Vector3 Item::GetWorldPosition() {
 
 void Item::OnCollision() { 
 	isDead_ = true; 
+
 	audio_->PlayWave(deathBird_);
 }

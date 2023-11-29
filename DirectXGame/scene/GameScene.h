@@ -84,6 +84,9 @@ public: // メンバ関数
 	/// </summary>
 	void DrawScore();
 
+	// getter
+	int GetScore() { return gameScore_; }
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -134,7 +137,7 @@ private:
 	// スコア
 	uint32_t textureHandleSCORE = 0;
 	Sprite* spriteScore = {};
-	int gameScore = 0;
+	int gameScore_ = 0;
 
 	//BGM
 	uint32_t BGM_ = 0;

@@ -63,6 +63,8 @@ void GameScene::Initialize() {
 	// スコアのスプライト描画
 	spriteScore = Sprite::Create(textureHandleSCORE, {0.0f, 10});
 
+	gameScore_ = 0;
+
 	//BGM
 	BGM_ = audio_->LoadWave("Lada.wav");
 
@@ -184,6 +186,8 @@ void GameScene::CheckAllCollision() {
 
 		if (Hit <= Radius) {
 			item->OnCollision();
+			gameScore_++;
+			
 		}
 	}
 	posA = player_->GetWorldPosition();
@@ -295,7 +299,7 @@ void GameScene::GamePlayDraw2DNear() {
 
 void GameScene::DrawScore() {
 	int eachNumber[4] = {};
-	int number = gameScore;
+	int number = gameScore_;
 
 	int keta = 1000;
 	for (int i = 0; i < 4; i++) {

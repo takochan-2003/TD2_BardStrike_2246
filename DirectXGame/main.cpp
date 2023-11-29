@@ -121,9 +121,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 
 		case Scene::GAME:
-
 			// ゲームシーンの毎フレーム処理
 			gameScene->Update();
+
+			resultScene->SetScore(gameScene->GetScore());
 
 			if (gameScene->IsSceneEnd() == true) {
 				// 次のシーンを値を代入してシーン切り替え

@@ -1,12 +1,11 @@
 ﻿#pragma once
-#include "ViewProjection.h"
-#include "WorldTransform.h"
-#include "Scene.h"
-#include "Input.h"
 #include "DirectXCommon.h"
+#include "Input.h"
 #include "Model.h"
+#include "Scene.h"
 #include "Sprite.h"
 #include "ViewProjection.h"
+#include "WorldTransform.h"
 class ResultScene {
 public:
 	void Initialize();
@@ -29,6 +28,8 @@ public:
 	/// </summary>
 	void DrawScore();
 
+	// セッター
+	int SetScore(int gameScore) { return gameScore_ = gameScore; };
 
 private:
 	DirectXCommon* dxCommon_ = nullptr;
@@ -49,9 +50,8 @@ private:
 	// スコア
 	uint32_t textureHandleSCORE = 0;
 	Sprite* spriteScore = {};
-	int gameScore = 0;
+	int gameScore_ = 0;
 
 	uint32_t textureHandle_ = 0;
 	Sprite* sprite_ = nullptr;
-
 };

@@ -23,6 +23,8 @@ void ResultScene::Initialize() {
 	// 背景のスプライト
 	textureHandle_ = TextureManager::Load("Result.png");
 	sprite_ = Sprite::Create(textureHandle_, {640, 360}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.5f, 0.5f});
+
+	//gameScore_ = 0;
 }
 
 void ResultScene::Updata() {
@@ -34,6 +36,9 @@ void ResultScene::Updata() {
 			isSceneEnd = true;
 		}
 	}
+
+	//SetScore(gameScore_);
+
 }
 
 void ResultScene::Draw() {
@@ -92,7 +97,7 @@ void ResultScene::GamePlayDraw2DNear() {
 
 void ResultScene::DrawScore() {
 	int eachNumber[4] = {};
-	int number = gameScore;
+	int number = gameScore_;
 
 	int keta = 1000;
 	for (int i = 0; i < 4; i++) {
