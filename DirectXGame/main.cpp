@@ -99,7 +99,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			if (titleScene->IsSceneEnd() == true) {
 				// 次のシーンを値を代入してシーン切り替え
 				scene = titleScene->NextScene();
-				titleScene->Initialize();
+				titleScene->Reset();
 			}
 
 			// タイトルシーンの毎フレーム処理
@@ -112,7 +112,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			if (exScene->IsSceneEnd() == true) {
 				// 次のシーンを値を代入してシーン切り替え
 				scene = exScene->NextScene();
-				exScene->Initialize();
+				exScene->Reset();
 			}
 
 			// タイトルシーンの毎フレーム処理
@@ -129,8 +129,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			if (gameScene->IsSceneEnd() == true) {
 				// 次のシーンを値を代入してシーン切り替え
 				scene = gameScene->NextScene();
-				gameScene->Initialize();
 				gameScene->StopBGM();
+				gameScene->Reset();
 			}
 
 			break;
@@ -140,7 +140,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			if (resultScene->IsSceneEnd() == true) {
 				// 次のシーンを値を代入してシーン切り替え
 				scene = resultScene->NextScene();
-				resultScene->Initialize();
+				resultScene->Reset();
 			}
 
 			// リザルトシーンの毎フレーム処理

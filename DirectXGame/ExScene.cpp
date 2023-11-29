@@ -3,7 +3,6 @@
 void ExScene::Initialize() {
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
-	isSceneEnd = false;
 
 	// 背景のスプライト
 	textureHandle_ = TextureManager::Load("Ex.png");
@@ -65,3 +64,5 @@ void ExScene::Draw() {
 
 #pragma endregion
 }
+
+void ExScene::Reset() { isSceneEnd = false; }

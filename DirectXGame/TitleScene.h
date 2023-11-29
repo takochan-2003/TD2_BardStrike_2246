@@ -21,6 +21,8 @@ public:
 
 	Scene NextScene() { return Scene::EX; }
 
+	void Reset();
+
 private:
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;

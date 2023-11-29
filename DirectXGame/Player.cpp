@@ -2,7 +2,7 @@
 #include "ImGuiManager.h"
 #include <cassert>
 
-void Player::Initialize(Model* model) {
+void Player::Initialize(Model* model, Vector3 position) {
 	// NULLポインタチェック
 	assert(model);
 	// 引数からデータを受け取る
@@ -14,7 +14,7 @@ void Player::Initialize(Model* model) {
 
 	worldTransform_.scale_ = {1.0f, 1.0f, 1.0f};
 	worldTransform_.rotation_ = {0.0f, 0.0f, 0.0f};
-	worldTransform_.translation_ = {0.0f, 0.0f, 0.0f};
+	worldTransform_.translation_ = position;
 
 	// シングルトンインスタンスを取得する
 	input_ = Input::GetInstance();
@@ -154,6 +154,11 @@ void Player::ResetPosition() {
 
 	// シングルトンインスタンスを取得する
 	input_ = Input::GetInstance();
+}
+
+void Player::SceneEndResetPosition() {
+	worldTransform_.rotation_ = {0.0f, 0.0f, 0.0f};
+	worldTransform_.translation_ = {0.0f, 0.0f, 0.0f};
 }
 
 void Player::SkydomeLeave() { Player::ResetPosition(); }

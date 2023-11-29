@@ -3,7 +3,6 @@
 void TitleScene::Initialize() {
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
-	isSceneEnd = false;
 
 	// 背景のスプライト
 	textureHandle_ = TextureManager::Load("Title.png");
@@ -67,3 +66,5 @@ void TitleScene::Draw() {
 
 #pragma endregion
 }
+
+void TitleScene::Reset() { isSceneEnd = false; }

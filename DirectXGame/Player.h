@@ -17,7 +17,7 @@ public: // メンバ関数
 	//Player();
 
 public:
-	void Initialize(Model* model);
+	void Initialize(Model* model, Vector3 position);
 
 	void Update();
 
@@ -51,6 +51,8 @@ public:
 
 	//元の位置に戻す処理
 	void ResetPosition();
+
+	void SceneEndResetPosition();
 
 private:
 	// カメラのビュープロジェクション

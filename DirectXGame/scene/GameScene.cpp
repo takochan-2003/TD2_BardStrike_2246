@@ -31,7 +31,10 @@ void GameScene::Initialize() {
 	player_ = std::make_unique<Player>();
 	// 3Dモデルの生成
 	modelPlayer_.reset(Model::CreateFromOBJ("Player", true));
-	player_->Initialize(modelPlayer_.get());
+
+	PlayerPosition = {0, 0, 0};
+
+	player_->Initialize(modelPlayer_.get(),PlayerPosition);
 	player_->SetViewProjection(&followCamera_->GetViewProjection());
 
 	// スカイドームの生成と初期化処理
@@ -47,11 +50,6 @@ void GameScene::Initialize() {
 	// 自キャラに追従カメラをアドレス渡し
 	player_->SetViewProjection(&followCamera_->GetViewProjection());
 
-	isSceneEnd = false;
-
-	//ゲームの制限時間
-	SceneEndTitle = 60 * 10;
-
 	// スコア文字テクスチャ
 	textureHandleSCORE = TextureManager::Load("score.png");
 	// スコアの数字テクスチャ
@@ -63,9 +61,9 @@ void GameScene::Initialize() {
 	// スコアのスプライト描画
 	spriteScore = Sprite::Create(textureHandleSCORE, {0.0f, 10});
 
-	gameScore_ = 0;
+	SceneEndTitle = 60 * 10;
 
-	//BGM
+	// BGM
 	BGM_ = audio_->LoadWave("Lada.wav");
 
 	Sound_ = audio_->PlayWave(BGM_, true);
@@ -96,9 +94,9 @@ void GameScene::Update() {
 	CheckAllCollision();
 
 	// デスフラグの立ったアイテムを削除
-	items_.remove_if([](const std::unique_ptr<Item>& item) {
+	items_.remove_if([](std::unique_ptr<Item>& item) {
 		if (item->IsDead()) {
-			//delete item;
+			item.release();
 			return true;
 		}
 		return false;
@@ -110,7 +108,6 @@ void GameScene::Update() {
 
 	// CSVファイルの更新処理
 	UpdataPointPopCommands();
-
 }
 
 void GameScene::Draw() {
@@ -170,7 +167,7 @@ void GameScene::Draw() {
 #pragma endregion
 }
 
-void GameScene::CheckAllCollision() { 
+void GameScene::CheckAllCollision() {
 	Vector3 posA, posB;
 
 	for (const std::unique_ptr<Item>& item : items_) {
@@ -182,12 +179,11 @@ void GameScene::CheckAllCollision() {
 		            (posA.z - posB.z) * (posA.z - posB.z);
 
 		float Radius =
-		    (player_->GetRadius() + item->GetRadius()) * (player_->GetRadius() + item->GetRadius()); 
+		    (player_->GetRadius() + item->GetRadius()) * (player_->GetRadius() + item->GetRadius());
 
 		if (Hit <= Radius) {
 			item->OnCollision();
 			gameScore_++;
-			
 		}
 	}
 	posA = player_->GetWorldPosition();
@@ -196,7 +192,8 @@ void GameScene::CheckAllCollision() {
 	float Leave = (posA.x - posB.x) * (posA.x - posB.x) + (posA.y - posB.y) * (posA.y - posB.y) +
 	              (posA.z - posB.z) * (posA.z - posB.z);
 
-	float Radius = (player_->GetRadius() + skydome_->GetRadius()) *(player_->GetRadius() + skydome_->GetRadius());
+	float Radius = (player_->GetRadius() + skydome_->GetRadius()) *
+	               (player_->GetRadius() + skydome_->GetRadius());
 
 	if (Leave >= Radius) {
 		player_->ResetPosition();
@@ -217,16 +214,6 @@ void GameScene::LoadPointPopData() {
 }
 
 void GameScene::UpdataPointPopCommands() {
-
-	//// 待機処理
-	//if (standFlag) {
-	//	standTime--;
-	//	if (standTime <= 0) {
-	//		// 待機完了
-	//		standFlag = false;
-	//	}
-	//	return;
-	//}
 
 	// 1行分の文字列を入れる変数
 	std::string line;
@@ -261,21 +248,7 @@ void GameScene::UpdataPointPopCommands() {
 			float z = (float)std::atof(word.c_str());
 
 			PointGenerate({x, y, z});
-		} 
-		// WAITコマンド
-		//else if (word.find("WAIT") == 0) {
-		//	getline(line_stream, word, ',');
-
-		//	// 待ち時間
-		//	int32_t waitTime = atoi(word.c_str());
-
-		//	// 待機時間
-		//	standFlag = true;
-		//	standTime = waitTime;
-
-		//	// コマンドループを抜ける
-		//	break;
-		//}
+		}
 	}
 }
 
@@ -288,8 +261,9 @@ void GameScene::PointGenerate(Vector3 position) {
 	items_.push_back(static_cast<std::unique_ptr<Item>>(item));
 }
 
-void GameScene::StopBGM() {
+void GameScene::StopBGM() { 
 	audio_->StopWave(Sound_);
+	Sound_ = audio_->PlayWave(BGM_, true);
 }
 
 void GameScene::GamePlayDraw2DNear() {
@@ -312,4 +286,24 @@ void GameScene::DrawScore() {
 		spriteNumber_[i]->SetTextureRect({32.0f * eachNumber[i], 0}, {32, 64});
 		spriteNumber_[i]->Draw();
 	}
+}
+
+void GameScene::Reset() {
+
+	isSceneEnd = false;
+
+	player_->SceneEndResetPosition();
+
+	// ゲームの制限時間
+	SceneEndTitle = 60 * 10;
+
+	gameScore_ = 0;
+
+	for (const std::unique_ptr<Item>& item : items_) {
+		item->OnCollision();
+	}
+
+	// CSVファイル読み込み
+	LoadPointPopData();
+
 }

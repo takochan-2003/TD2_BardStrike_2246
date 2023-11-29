@@ -87,6 +87,8 @@ public: // メンバ関数
 	// getter
 	int GetScore() { return gameScore_; }
 
+	void Reset();
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -126,6 +128,8 @@ private:
 	int standTime = 0;
 
 	int SceneEndTitle = 0;
+
+	Vector3 PlayerPosition;
 
 		// シーンを終わらせるフラグ
 	bool isSceneEnd = false;

@@ -31,6 +31,8 @@ public:
 	// セッター
 	int SetScore(int gameScore) { return gameScore_ = gameScore; };
 
+	void Reset();
+
 private:
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
