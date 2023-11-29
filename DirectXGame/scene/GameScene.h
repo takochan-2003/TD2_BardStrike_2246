@@ -85,7 +85,9 @@ public: // メンバ関数
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
-	Audio* audio_ = nullptr;
+	//Audio* audio_ = nullptr;
+
+	std::unique_ptr<Audio> audio_;
 
 	// 自キャラの3Dモデル
 	std::unique_ptr<Model> modelPlayer_;
@@ -135,8 +137,10 @@ private:
 	int gameScore = 0;
 
 	//BGM
-	uint32_t BGM_ = 0;
-	uint32_t Sound_ = 0;
+	std::unique_ptr<int32_t> BGM_;
+	std::unique_ptr<int32_t> Sound_;
+	//uint32_t BGM_ = 0;
+	//uint32_t Sound_ = 0;
 
 	/// <summary>
 	/// ゲームシーン用
