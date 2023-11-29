@@ -61,7 +61,7 @@ void GameScene::Initialize() {
 	// スコアのスプライト描画
 	spriteScore = Sprite::Create(textureHandleSCORE, {0.0f, 10});
 
-	SceneEndTitle = 60 * 10;
+	SceneEndTitle = 60 *40;
 
 	// BGM
 	BGM_ = audio_->LoadWave("Lada.wav");
@@ -295,7 +295,7 @@ void GameScene::Reset() {
 	player_->SceneEndResetPosition();
 
 	// ゲームの制限時間
-	SceneEndTitle = 60 * 10;
+	SceneEndTitle = 60 * 40;
 
 	gameScore_ = 0;
 
