@@ -286,6 +286,10 @@ void GameScene::PointGenerate(Vector3 position) {
 	items_.push_back(static_cast<std::unique_ptr<Item>>(item));
 }
 
+void GameScene::StopBGM() {
+	audio_->StopWave(Sound_);
+}
+
 void GameScene::GamePlayDraw2DNear() {
 	spriteScore->Draw();
 	DrawScore();
