@@ -129,6 +129,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				// 次のシーンを値を代入してシーン切り替え
 				scene = gameScene->NextScene();
 				gameScene->Initialize();
+				gameScene->StopBGM();
 			}
 
 			break;
