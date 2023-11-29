@@ -1,6 +1,6 @@
 ﻿#include "FollowCamera.h"
-#include "MT.h"
 #include "ImGuiManager.h"
+#include "MT.h"
 
 FollowCamera::FollowCamera() {}
 
@@ -25,9 +25,8 @@ void FollowCamera::Update() { // ゲームパッドの状態を得る変数
 		viewProjection_.rotation_.y += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * rotation;
 		viewProjection_.rotation_.x -= (float)joyState.Gamepad.sThumbRY / SHRT_MAX * rotation;
 
-		//左スティックでカメラの寄りと引きを動かす
-		zoom = (float)joyState.Gamepad.sThumbLY / SHRT_MAX* 1.0f;
-
+		// 左スティックでカメラの寄りと引きを動かす
+		zoom = (float)joyState.Gamepad.sThumbLY / SHRT_MAX * 1.0f;
 	}
 
 	if (viewProjection_.rotation_.x >= 1.5f) {
@@ -58,4 +57,12 @@ void FollowCamera::Update() { // ゲームパッドの状態を得る変数
 	ImGui::End();*/
 
 	viewProjection_.UpdateMatrix();
+}
+
+void FollowCamera::SceneEndResetPosition() {
+	viewProjection_.translation_ = {0.0f, 0.0f, 0.0f};
+	viewProjection_.rotation_ = {0.0f, 0.0f, 0.0f};
+
+	viewProjection_.UpdateMatrix();
+
 }

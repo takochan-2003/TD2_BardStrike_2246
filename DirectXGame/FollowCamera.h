@@ -37,6 +37,8 @@ class FollowCamera {
 	//カメラの角度取得
 	Vector3 GetViewRotate() { return viewProjection_.rotation_; }
 
+	void SceneEndResetPosition();
+
 	/// <summary>
 	/// プロジェクション行列計算用のメンバ設定関数群
 	/// </summary>

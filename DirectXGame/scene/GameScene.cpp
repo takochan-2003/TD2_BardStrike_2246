@@ -294,7 +294,7 @@ void GameScene::Reset() {
 
 	player_->SceneEndResetPosition();
 
-	worldTransform_.UpdateMatrix();
+	followCamera_->SceneEndResetPosition();
 
 	// ゲームの制限時間
 	SceneEndTitle = 60 * 40;
