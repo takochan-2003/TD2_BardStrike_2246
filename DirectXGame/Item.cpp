@@ -9,7 +9,7 @@ void Item::Initialize(Model* model, Vector3 position) {
 	// ポジション
 	worldTransform_.translation_ = position;
 
-	worldTransform_.scale_ = {9, 9, 9};
+	worldTransform_.scale_ = {1, 1, 1};
 
 	audio_ = Audio::GetInstance();
 	deathBird_ = audio_->LoadWave("get.wav");
