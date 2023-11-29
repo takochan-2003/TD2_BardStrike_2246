@@ -10,10 +10,10 @@ void ResultScene::Initialize() {
 	textureHandleNumber = TextureManager::Load("number.png");
 	// スコアのスプライト描画
 	for (int i = 0; i < 4; i++) {
-		spriteNumber_[i] = Sprite::Create(textureHandleNumber, {130.0f + i * 26, 10});
+		spriteNumber_[i] = Sprite::Create(textureHandleNumber, {620.0f + i * 26, 340});
 	}
 	// スコアのスプライト描画
-	spriteScore = Sprite::Create(textureHandleSCORE, {0.0f, 10});
+	spriteScore = Sprite::Create(textureHandleSCORE, {490-1.0f, 340});
 
 	// ビューポートプロジェクションの初期化
 	viewProjection_.Initialize();

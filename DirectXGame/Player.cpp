@@ -1,5 +1,5 @@
 ﻿#include "Player.h"
-#include "ImGuiManager.h"
+
 #include <cassert>
 
 void Player::Initialize(Model* model, Vector3 position) {
@@ -86,20 +86,20 @@ void Player::AutoMove() {
 			moveSpeed = -0.6f;
 		}
 
-		ImGui::Begin("player");
-		// ImGui::Text("moveSpeed:%f", moveSpeed, 0.0f, 360.0f);
+		//ImGui::Begin("player");
+		//// ImGui::Text("moveSpeed:%f", moveSpeed, 0.0f, 360.0f);
 
-		float Position[3] = {
-		    worldTransform_.translation_.x, worldTransform_.translation_.y,
-		    worldTransform_.translation_.z};
+		//float Position[3] = {
+		//    worldTransform_.translation_.x, worldTransform_.translation_.y,
+		//    worldTransform_.translation_.z};
 
-		ImGui::SliderFloat3("Positon", Position, -300, 300);
+		//ImGui::SliderFloat3("Positon", Position, -300, 300);
 
-		worldTransform_.translation_.x = Position[0];
-		worldTransform_.translation_.y = Position[1];
-		worldTransform_.translation_.z = Position[2];
+		//worldTransform_.translation_.x = Position[0];
+		//worldTransform_.translation_.y = Position[1];
+		//worldTransform_.translation_.z = Position[2];
 
-		ImGui::End();
+		//ImGui::End();
 	}
 
 	// カメラの角度から回転行列を計算する
