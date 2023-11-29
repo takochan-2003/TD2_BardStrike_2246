@@ -11,12 +11,6 @@ void TitleScene::Initialize() {
 }
 
 void TitleScene::Updata() {
-	// ゲームパッドの状態を得る変数
-	//XINPUT_STATE joyState;
-
-	/*if (Input::GetInstance()->GetJoystickState(0, joyState)) {
-		isSceneEnd = true;
-	}*/
 
 	if (input_->TriggerKey(DIK_SPACE)) {
 		isSceneEnd = true;
