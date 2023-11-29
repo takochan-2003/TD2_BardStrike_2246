@@ -1,32 +1,16 @@
-﻿#include "ResultScene.h"
+﻿#include "ExScene.h"
 
-void ResultScene::Initialize() {
+void ExScene::Initialize() {
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
-
 	isSceneEnd = false;
 
-	// スコア文字テクスチャ
-	textureHandleSCORE = TextureManager::Load("score.png");
-	// スコアの数字テクスチャ
-	textureHandleNumber = TextureManager::Load("number.png");
-	// スコアのスプライト描画
-	for (int i = 0; i < 4; i++) {
-		spriteNumber_[i] = Sprite::Create(textureHandleNumber, {130.0f + i * 26, 10});
-	}
-	// スコアのスプライト描画
-	spriteScore = Sprite::Create(textureHandleSCORE, {0.0f, 10});
-
-	// ビューポートプロジェクションの初期化
-	viewProjection_.Initialize();
-
 	// 背景のスプライト
-	textureHandle_ = TextureManager::Load("Result.png");
+	textureHandle_ = TextureManager::Load("uvChecker.png");
 	sprite_ = Sprite::Create(textureHandle_, {640, 350}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.5f, 0.5f});
 }
 
-void ResultScene::Updata() {
-	// ゲームパッドの状態を得る変数
+void ExScene::Updata() { // ゲームパッドの状態を得る変数
 	XINPUT_STATE joyState;
 	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
 		if (joyState.Gamepad.wButtons == XINPUT_GAMEPAD_A) {
@@ -36,8 +20,7 @@ void ResultScene::Updata() {
 	}
 }
 
-void ResultScene::Draw() {
-
+void ExScene::Draw() {
 	// コマンドリストの取得
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 
@@ -45,11 +28,11 @@ void ResultScene::Draw() {
 	// 背景スプライト描画前処理
 	Sprite::PreDraw(commandList);
 
-	sprite_->Draw();
-
 	/// <summary>
 	/// ここに背景スプライトの描画処理を追加できる
 	/// </summary>
+
+	sprite_->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -77,32 +60,8 @@ void ResultScene::Draw() {
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
 
-	GamePlayDraw2DNear();
-
 	// スプライト描画後処理
 	Sprite::PostDraw();
 
 #pragma endregion
-}
-
-void ResultScene::GamePlayDraw2DNear() {
-	spriteScore->Draw();
-	DrawScore();
-}
-
-void ResultScene::DrawScore() {
-	int eachNumber[4] = {};
-	int number = gameScore;
-
-	int keta = 1000;
-	for (int i = 0; i < 4; i++) {
-		eachNumber[i] = number / keta;
-		number = number % keta;
-		keta = keta / 10;
-	}
-	for (int i = 0; i < 4; i++) {
-		spriteNumber_[i]->SetSize({32, 64});
-		spriteNumber_[i]->SetTextureRect({32.0f * eachNumber[i], 0}, {32, 64});
-		spriteNumber_[i]->Draw();
-	}
 }

@@ -5,23 +5,23 @@ void TitleScene::Initialize() {
 	input_ = Input::GetInstance();
 	isSceneEnd = false;
 
-	//背景のスプライト
-	textureHandle_ = TextureManager::Load("uvChecker.png");
+	// 背景のスプライト
+	textureHandle_ = TextureManager::Load("Title.png");
 	sprite_ = Sprite::Create(textureHandle_, {640, 350}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.5f, 0.5f});
 }
 
 void TitleScene::Updata() {
+
+	
+
 	// ゲームパッドの状態を得る変数
-	//XINPUT_STATE joyState;
-
-	/*if (Input::GetInstance()->GetJoystickState(0, joyState)) {
-		isSceneEnd = true;
-	}*/
-
-	if (input_->TriggerKey(DIK_SPACE)) {
-		isSceneEnd = true;
+	XINPUT_STATE joyState;
+	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
+		if (joyState.Gamepad.wButtons == XINPUT_GAMEPAD_A) {
+			Sleep(1 * 300);
+			isSceneEnd = true;
+		}
 	}
-
 }
 
 void TitleScene::Draw() {
@@ -67,5 +67,5 @@ void TitleScene::Draw() {
 	// スプライト描画後処理
 	Sprite::PostDraw();
 
-#pragma endregion 
+#pragma endregion
 }

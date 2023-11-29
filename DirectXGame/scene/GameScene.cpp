@@ -50,7 +50,7 @@ void GameScene::Initialize() {
 	isSceneEnd = false;
 
 	//ゲームの制限時間
-	SceneEndTitle = 60 * 10;
+	SceneEndTitle = 60 * 1;
 
 	// スコア文字テクスチャ
 	textureHandleSCORE = TextureManager::Load("score.png");
@@ -62,6 +62,11 @@ void GameScene::Initialize() {
 	}
 	// スコアのスプライト描画
 	spriteScore = Sprite::Create(textureHandleSCORE, {0.0f, 10});
+
+	//BGM
+	BGM_ = audio_->LoadWave("Lada.wav");
+
+	Sound_ = audio_->PlayWave(BGM_, true);
 
 }
 
@@ -84,9 +89,6 @@ void GameScene::Update() {
 	// スカイドーム
 	skydome_->Update();
 
-	// CSVファイルの更新処理
-	UpdataPointPopCommands();
-
 	// ビュープロジェクション行列の転送
 	viewProjection_.TransferMatrix();
 
@@ -104,6 +106,11 @@ void GameScene::Update() {
 	if (SceneEndTitle <= 0) {
 		//isSceneEnd = true;
 	}
+
+	//LoadPointPopData();
+
+	// CSVファイルの更新処理
+	UpdataPointPopCommands();
 
 }
 
@@ -209,15 +216,15 @@ void GameScene::LoadPointPopData() {
 
 void GameScene::UpdataPointPopCommands() {
 
-	// 待機処理
-	if (standFlag) {
-		standTime--;
-		if (standTime <= 0) {
-			// 待機完了
-			standFlag = false;
-		}
-		return;
-	}
+	//// 待機処理
+	//if (standFlag) {
+	//	standTime--;
+	//	if (standTime <= 0) {
+	//		// 待機完了
+	//		standFlag = false;
+	//	}
+	//	return;
+	//}
 
 	// 1行分の文字列を入れる変数
 	std::string line;
@@ -252,20 +259,21 @@ void GameScene::UpdataPointPopCommands() {
 			float z = (float)std::atof(word.c_str());
 
 			PointGenerate({x, y, z});
-		} // WAITコマンド
-		else if (word.find("WAIT") == 0) {
-			getline(line_stream, word, ',');
+		} 
+		// WAITコマンド
+		//else if (word.find("WAIT") == 0) {
+		//	getline(line_stream, word, ',');
 
-			// 待ち時間
-			int32_t waitTime = atoi(word.c_str());
+		//	// 待ち時間
+		//	int32_t waitTime = atoi(word.c_str());
 
-			// 待機時間
-			standFlag = true;
-			standTime = waitTime;
+		//	// 待機時間
+		//	standFlag = true;
+		//	standTime = waitTime;
 
-			// コマンドループを抜ける
-			break;
-		}
+		//	// コマンドループを抜ける
+		//	break;
+		//}
 	}
 }
 

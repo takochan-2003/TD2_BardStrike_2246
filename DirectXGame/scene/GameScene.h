@@ -134,6 +134,10 @@ private:
 	Sprite* spriteScore = {};
 	int gameScore = 0;
 
+	//BGM
+	uint32_t BGM_ = 0;
+	uint32_t Sound_ = 0;
+
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>

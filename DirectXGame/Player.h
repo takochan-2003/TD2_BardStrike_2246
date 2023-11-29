@@ -65,6 +65,6 @@ private:
 	Input* input_ = nullptr;
 
 	//半径
-	float radius_ = 32;
+	float radius_ = 2;
 
 };
