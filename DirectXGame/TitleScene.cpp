@@ -7,7 +7,7 @@ void TitleScene::Initialize() {
 
 	// 背景のスプライト
 	textureHandle_ = TextureManager::Load("Title.png");
-	sprite_ = Sprite::Create(textureHandle_, {640, 350}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.5f, 0.5f});
+	sprite_ = Sprite::Create(textureHandle_, {640, 360}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.5f, 0.5f});
 }
 
 void TitleScene::Updata() {

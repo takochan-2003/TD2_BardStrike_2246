@@ -6,7 +6,7 @@ void ExScene::Initialize() {
 	isSceneEnd = false;
 
 	// 背景のスプライト
-	textureHandle_ = TextureManager::Load("uvChecker.png");
+	textureHandle_ = TextureManager::Load("Ex.png");
 	sprite_ = Sprite::Create(textureHandle_, {640, 350}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.5f, 0.5f});
 }
 

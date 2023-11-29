@@ -50,7 +50,7 @@ void GameScene::Initialize() {
 	isSceneEnd = false;
 
 	//ゲームの制限時間
-	SceneEndTitle = 60 * 1;
+	SceneEndTitle = 60 * 10;
 
 	// スコア文字テクスチャ
 	textureHandleSCORE = TextureManager::Load("score.png");
@@ -67,7 +67,6 @@ void GameScene::Initialize() {
 	BGM_ = audio_->LoadWave("Lada.wav");
 
 	Sound_ = audio_->PlayWave(BGM_, true);
-
 }
 
 void GameScene::Update() {
@@ -104,10 +103,8 @@ void GameScene::Update() {
 	});
 
 	if (SceneEndTitle <= 0) {
-		//isSceneEnd = true;
+		isSceneEnd = true;
 	}
-
-	//LoadPointPopData();
 
 	// CSVファイルの更新処理
 	UpdataPointPopCommands();
@@ -203,6 +200,7 @@ void GameScene::CheckAllCollision() {
 }
 
 void GameScene::LoadPointPopData() {
+	pointPopCommnds.clear();
 	std::ifstream file;
 	file.open("Resources/ItemPop.csv");
 	assert(file.is_open());
