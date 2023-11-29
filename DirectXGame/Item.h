@@ -3,6 +3,7 @@
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 #include "Model.h"
+#include "Audio.h"
 
 class Item {
 public:
@@ -34,6 +35,11 @@ public:
 private:
 
 	WorldTransform worldTransform_;
+
+	//サウンドデータハンドル
+	Audio* audio_ = nullptr;
+	uint32_t deathBird_ = 0;
+
 
 	// モデル
 	Model* model_ = nullptr;
