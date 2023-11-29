@@ -68,8 +68,6 @@ public: // メンバ関数
 	/// <param name="position"></param>
 	void PointGenerate(Vector3 position);
 
-	void BGM();
-
 	bool IsSceneEnd() { return isSceneEnd; }
 
 	Scene NextScene() { return Scene::RESULT; }

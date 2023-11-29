@@ -283,8 +283,6 @@ void GameScene::PointGenerate(Vector3 position) {
 	items_.push_back(static_cast<std::unique_ptr<Item>>(item));
 }
 
-void GameScene::BGM() {}
-
 void GameScene::GamePlayDraw2DNear() {
 	spriteScore->Draw();
 	DrawScore();
