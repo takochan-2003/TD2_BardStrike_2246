@@ -79,7 +79,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	exScene = new ExScene;
 	exScene->Initialize();
 
-	Scene scene = Scene::RESULT;
+	Scene scene = Scene::TITLE;
 
 	// メインループ
 	while (true) {
