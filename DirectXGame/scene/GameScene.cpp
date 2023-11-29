@@ -294,6 +294,8 @@ void GameScene::Reset() {
 
 	player_->SceneEndResetPosition();
 
+	worldTransform_.UpdateMatrix();
+
 	// ゲームの制限時間
 	SceneEndTitle = 60 * 40;
 
@@ -306,6 +308,6 @@ void GameScene::Reset() {
 	// CSVファイル読み込み
 	LoadPointPopData();
 
-	worldTransform_.UpdateMatrix();
+	
 
 }

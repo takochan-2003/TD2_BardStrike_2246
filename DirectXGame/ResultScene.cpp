@@ -5,15 +5,15 @@ void ResultScene::Initialize() {
 	input_ = Input::GetInstance();
 
 	// スコア文字テクスチャ
-	textureHandleSCORE = TextureManager::Load("score.png");
+	textureHandleSCORE = TextureManager::Load("score_2.png");
 	// スコアの数字テクスチャ
 	textureHandleNumber = TextureManager::Load("number.png");
 	// スコアのスプライト描画
 	for (int i = 0; i < 4; i++) {
-		spriteNumber_[i] = Sprite::Create(textureHandleNumber, {620.0f + i * 26, 340});
+		spriteNumber_[i] = Sprite::Create(textureHandleNumber, {690.0f + i * 48, 290});
 	}
 	// スコアのスプライト描画
-	spriteScore = Sprite::Create(textureHandleSCORE, {490-1.0f, 340});
+	spriteScore = Sprite::Create(textureHandleSCORE, {390-1.0f, 290});
 
 	// ビューポートプロジェクションの初期化
 	viewProjection_.Initialize();
@@ -100,7 +100,7 @@ void ResultScene::DrawScore() {
 		keta = keta / 10;
 	}
 	for (int i = 0; i < 4; i++) {
-		spriteNumber_[i]->SetSize({32, 64});
+		spriteNumber_[i]->SetSize({64, 128});
 		spriteNumber_[i]->SetTextureRect({32.0f * eachNumber[i], 0}, {32, 64});
 		spriteNumber_[i]->Draw();
 	}
