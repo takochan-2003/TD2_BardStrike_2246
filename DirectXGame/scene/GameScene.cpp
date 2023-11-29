@@ -13,12 +13,10 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 
-	// 自機の3Dモデルの生成
-	modelPlayer_.reset(Model::CreateFromOBJ("cube", true));
 	// スカイドームの3Dモデルの生成
 	modelSkydome_.reset(Model::CreateFromOBJ("skydome", true));
 	// アイテムの3Dモデルの生成
-	modelItem_.reset(Model::CreateFromOBJ("cube", true));
+	modelItem_.reset(Model::CreateFromOBJ("Bard", true));
 
 	// ビューポートプロジェクションの初期化
 	viewProjection_.Initialize();
@@ -52,7 +50,7 @@ void GameScene::Initialize() {
 	isSceneEnd = false;
 
 	//ゲームの制限時間
-	SceneEndTitle = 6000;
+	SceneEndTitle = 60 * 10;
 
 	// スコア文字テクスチャ
 	textureHandleSCORE = TextureManager::Load("score.png");
@@ -104,7 +102,7 @@ void GameScene::Update() {
 	});
 
 	if (SceneEndTitle <= 0) {
-		isSceneEnd = true;
+		//isSceneEnd = true;
 	}
 
 }
