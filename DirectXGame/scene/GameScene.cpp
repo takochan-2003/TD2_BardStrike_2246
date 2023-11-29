@@ -22,7 +22,7 @@ void GameScene::Initialize() {
 	viewProjection_.Initialize();
 
 	//// ワールドトランスフォームの初期化
-	// worldTransform_.Initialize();
+	worldTransform_.Initialize();
 
 	// CSVファイル読み込み
 	LoadPointPopData();
@@ -34,7 +34,7 @@ void GameScene::Initialize() {
 
 	PlayerPosition = {0, 0, 0};
 
-	player_->Initialize(modelPlayer_.get(),PlayerPosition);
+	player_->Initialize(modelPlayer_.get(), PlayerPosition);
 	player_->SetViewProjection(&followCamera_->GetViewProjection());
 
 	// スカイドームの生成と初期化処理
@@ -61,7 +61,7 @@ void GameScene::Initialize() {
 	// スコアのスプライト描画
 	spriteScore = Sprite::Create(textureHandleSCORE, {0.0f, 10});
 
-	SceneEndTitle = 60 *40;
+	SceneEndTitle = 60 * 40;
 
 	// BGM
 	BGM_ = audio_->LoadWave("Lada.wav");
@@ -261,7 +261,7 @@ void GameScene::PointGenerate(Vector3 position) {
 	items_.push_back(static_cast<std::unique_ptr<Item>>(item));
 }
 
-void GameScene::StopBGM() { 
+void GameScene::StopBGM() {
 	audio_->StopWave(Sound_);
 	Sound_ = audio_->PlayWave(BGM_, true);
 }
@@ -305,5 +305,7 @@ void GameScene::Reset() {
 
 	// CSVファイル読み込み
 	LoadPointPopData();
+
+	worldTransform_.UpdateMatrix();
 
 }

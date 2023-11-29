@@ -157,8 +157,12 @@ void Player::ResetPosition() {
 }
 
 void Player::SceneEndResetPosition() {
+
 	worldTransform_.rotation_ = {0.0f, 0.0f, 0.0f};
 	worldTransform_.translation_ = {0.0f, 0.0f, 0.0f};
+	worldTransform_.scale_ = {1.0f, 1.0f, 1.0f};
+
+	worldTransform_.UpdateMatrix();
 }
 
 void Player::SkydomeLeave() { Player::ResetPosition(); }

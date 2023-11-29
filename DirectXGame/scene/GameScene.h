@@ -104,6 +104,9 @@ private: // メンバ変数
 	// ビュープロダクション
 	ViewProjection viewProjection_;
 
+	//ワールドトランスフォーム
+	WorldTransform worldTransform_;
+
 	// 自キャラ
 	std::unique_ptr<Player> player_;
 
