@@ -13,12 +13,10 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 
-	// 自機の3Dモデルの生成
-	modelPlayer_.reset(Model::CreateFromOBJ("cube", true));
 	// スカイドームの3Dモデルの生成
 	modelSkydome_.reset(Model::CreateFromOBJ("skydome", true));
 	// アイテムの3Dモデルの生成
-	modelItem_.reset(Model::CreateFromOBJ("cube", true));
+	modelItem_.reset(Model::CreateFromOBJ("Bard", true));
 
 	// ビューポートプロジェクションの初期化
 	viewProjection_.Initialize();
@@ -48,9 +46,33 @@ void GameScene::Initialize() {
 	followCamera_->SetTarget(&player_->GetWorldTransform());
 	// 自キャラに追従カメラをアドレス渡し
 	player_->SetViewProjection(&followCamera_->GetViewProjection());
+
+	isSceneEnd = false;
+
+	//ゲームの制限時間
+	SceneEndTitle = 60 * 10;
+
+	// スコア文字テクスチャ
+	textureHandleSCORE = TextureManager::Load("score.png");
+	// スコアの数字テクスチャ
+	textureHandleNumber = TextureManager::Load("number.png");
+	// スコアのスプライト描画
+	for (int i = 0; i < 4; i++) {
+		spriteNumber_[i] = Sprite::Create(textureHandleNumber, {130.0f + i * 26, 10});
+	}
+	// スコアのスプライト描画
+	spriteScore = Sprite::Create(textureHandleSCORE, {0.0f, 10});
+
+	//BGM
+	BGM_ = audio_->LoadWave("Lada.wav");
+
+	Sound_ = audio_->PlayWave(BGM_, true);
+
 }
 
 void GameScene::Update() {
+
+	SceneEndTitle--;
 
 	// 追従カメラの更新
 	followCamera_->Update();
@@ -75,7 +97,6 @@ void GameScene::Update() {
 
 	CheckAllCollision();
 
-
 	// デスフラグの立ったアイテムを削除
 	items_.remove_if([](const std::unique_ptr<Item>& item) {
 		if (item->IsDead()) {
@@ -84,6 +105,10 @@ void GameScene::Update() {
 		}
 		return false;
 	});
+
+	if (SceneEndTitle <= 0) {
+		//isSceneEnd = true;
+	}
 
 }
 
@@ -135,6 +160,8 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
+
+	GamePlayDraw2DNear();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -254,4 +281,26 @@ void GameScene::PointGenerate(Vector3 position) {
 	item->Initialize(modelItem_.get(), position);
 
 	items_.push_back(static_cast<std::unique_ptr<Item>>(item));
+}
+
+void GameScene::GamePlayDraw2DNear() {
+	spriteScore->Draw();
+	DrawScore();
+}
+
+void GameScene::DrawScore() {
+	int eachNumber[4] = {};
+	int number = gameScore;
+
+	int keta = 1000;
+	for (int i = 0; i < 4; i++) {
+		eachNumber[i] = number / keta;
+		number = number % keta;
+		keta = keta / 10;
+	}
+	for (int i = 0; i < 4; i++) {
+		spriteNumber_[i]->SetSize({32, 64});
+		spriteNumber_[i]->SetTextureRect({32.0f * eachNumber[i], 0}, {32, 64});
+		spriteNumber_[i]->Draw();
+	}
 }
